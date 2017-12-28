@@ -3,8 +3,8 @@ extends layout
 
 block body
   div(layout="row", flex, ng-controller="user", ng-cloak)
-    //if logued
-    include user/frame/menu
+    if logued
+      include user/frame/menu
     div(layout='column', flex, ng-init="initController('#{JSON.stringify(logued)}', '#{csrfToken}')")
       include user/frame/header
       md-content(layout="column", flex)

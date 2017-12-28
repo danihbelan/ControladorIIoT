@@ -42,10 +42,32 @@ route.get('/index', csrfProtection, function(req, res, next) {
 	res.render('login', {csrfToken : req.csrfToken()});
 });
 
+route.get('/user*',csrfProtection, function(req, res) {
+  initUser(req, res)
+});
+
 function renderError(res, head, text){
 	res.render('infoSoftPLC',
 		{head: head,
 			text:text
 		}
 	);
+}
+
+
+function initUser(req, res){
+  //Comprobamos DEBE estar relleno el idUser
+  /*if (!req.session.internal.idUser) {
+    // Si no esta logueado lo enviamos al login
+    res.redirect("/");
+    return;
+  }
+  var idUser = req.session.internal.idUser;*/
+
+	//Otras comprobaciones pertinentes
+
+  res.render('index', {logued: req.session.user,
+    csrfToken : req.csrfToken()
+  });
+
 }
