@@ -1,0 +1,21 @@
+//Created by danihbelan on 26/12/2017.
+div(ng-controller="loginLogin", ng-init="initController('#{csrfToken}')")
+
+    form.form-login(name="form")
+        div#login(layout="column")
+            md-input-container.inputLogin
+                label Usuario
+                input(flex,required,name="name", ng-model="user.name", maxlength="45")
+                div(ng-messages="form.email.$error", ng-if='form.email.$touched')
+                    div(ng-message="required") Requerido
+
+            md-input-container.inputLogin
+                label Contraseña
+                input(required, name="password", ng-model="user.password", type="password", maxlength="45")
+                div(ng-messages="form.password.$error", ng-if='form.password.$touched')
+                    div(ng-message="required") Requerido
+
+            md-button.md-raised.md-primary(type="submit", ng-click="clickLogin()", aria-label="Conectar") Conectar
+
+    div.div-ugr(flex, layout-fill)
+        img.img-ugr(ng-src="/images/logougr.png")

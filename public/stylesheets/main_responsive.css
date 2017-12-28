@@ -1,0 +1,129 @@
+@media only screen and (max-width: 1200px) {
+    table.twoColumns.md-table:not(.md-row-select) td.md-cell:nth-child(n+2):nth-last-child(n+2),
+    table.twoColumns.md-table:not(.md-row-select) th.md-column:nth-child(n+2):nth-last-child(n+2){
+        padding-right: 8px !important;
+    }
+}
+@media only screen and (max-width: 960px) {
+    .login{
+        min-width:0;
+        max-width: none;
+        padding:48px 24px 24px 24px;
+    }
+
+    .img-logo{
+        visibility: hidden;
+        height: 0px;
+    }
+
+    .img-login{
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+    }
+
+    .login-register{
+        padding: 48px 48px 48px 48px;
+        max-width: none;
+        width: 100%;
+    }
+}
+
+
+@media only screen and (max-width: 600px) {
+    .backgroud-register{
+        padding: 0;
+    }
+
+    table.md-table:not(.md-row-select) td.md-cell:nth-child(n+2):nth-last-child(n+2), table.md-table:not(.md-row-select) th.md-column:nth-child(n+2):nth-last-child(n+2){
+        padding-right: 8px;
+    }
+    table.md-table td.md-cell:last-child, table.md-table th.md-column:last-child{
+        padding-right: 8px;
+    }
+    table.md-table:not(.md-row-select) td.md-cell:first-child, table.md-table:not(.md-row-select) th.md-column:first-child{
+        padding-right: 8px;
+    }
+    /*Listas en los moviles chicos*/
+    md-list-item.md-3-line, md-list-item.md-3-line>.md-no-style,
+    md-list-item.md-2-line, md-list-item.md-2-line>.md-no-style{
+        padding: 0;
+    }
+
+
+    .card-right{
+        margin:8px 0px 8px;
+    }
+
+    .card-left{
+        margin:8px 0px 8px;
+    }
+
+    .card{
+        margin:8px 0 8px;
+    }
+
+    .avatar-profile{
+        margin: 0 auto 24px;
+    }
+
+    .zoomImage{
+        height: 300px;
+        width: 300px;
+        border-radius: 100%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .title {
+        font-size: 30px;
+        width: 100%;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    #searcher {
+        margin: 0px auto;
+    }
+
+    .descriptionTerm {
+        width: 100%;
+    }
+
+    .hideOnResponsive{
+        height: 0px !important;
+        padding: 0;
+        overflow: hidden;
+    }
+}
+
+
+@media only screen and (max-width: 400px) {
+    .header-letters{
+        padding-top: 24px;
+        max-width: 300px;
+        max-height: 126px;
+        width: auto;
+        height: auto;
+        display: block;
+    }
+
+    .cropArea{
+        height: 200px;
+    }
+
+    .header-sidenav{
+        min-height: 120px;
+        background : #00796b;
+        color : #ffffff;
+    }
+
+
+    .sweet-alert .sa-icon{
+        overflow: hidden;
+        height: 0px;
+        margin: 0px;
+        border:0;
+    }
+}
+

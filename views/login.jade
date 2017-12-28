@@ -1,0 +1,18 @@
+//Created by danihbelan on 26/12/17.
+extends layout
+
+block body
+    div.backgroud-login(flex, hide-sm, hide-xs, layout="row", layout-align="end start")
+
+    md-content.md-whiteframe-8.login(flex, layout="column",ng-cloak)
+
+        div(align="center")
+            br
+            br
+            img.img-login(ng-src="/images/logo/logo_letras.png")
+
+        div(ng-view)
+
+
+block my_scripts
+    script(src='/dist/login.min.js')

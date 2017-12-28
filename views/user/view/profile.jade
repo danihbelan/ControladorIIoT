@@ -1,0 +1,83 @@
+//
+   Created by danihbelan on 14/9/17.
+
+md-content.md-padding(layout='column', flex,  ng-controller="coordinatorViewProfile", ng-init="initController('#{csrfToken}')", ng-cloak)
+    form(name="form", ng-submit="clickSave()")
+        md-card
+            md-card-title(flex="initial")
+                span.md-headline Mi perfil
+            md-card-content(layout="column", layout-gt-sm="row")
+                div.md-padding(layout="column", layout-align="start center")
+                    img.avatar-profile(ng-src = "{{urlChanged || urlImage}}", ng-class="{'image-default-user':!user.picture}")
+                    md-button.md-button.md-primary(ngf-select,ng-model="picFile", ngf-accept="'image/*'",
+                    ng-change="changeImage(picFile)", ngf-max-size="2MB", ngf-drop) Cambiar
+
+                div(layout="column", flex)
+                    span DNI/Pasaporte: {{newUser.dni}}
+                    p Correo: {{newUser.mail}}
+
+                    md-input-container.input_profile
+                        label Nombre
+                        input(required, name="name", ng-model="newUser.name", ng-maxlength="45")
+                        div(ng-messages="form.name.$error")
+                            div(ng-message="required") Requerido
+                            div(ng-message="maxlength") Máximo 45 caracteres
+
+                    md-input-container.input_profile
+                        label Primer apellido
+                        input(required, name="lastname1", ng-model="newUser.last_name_1", ng-maxlength="45")
+                        div(ng-messages="form.lastname1.$error")
+                            div(ng-message="required") Requerido
+                            div(ng-message="maxlength") Máximo 45 caracteres
+
+
+                    md-input-container.input_profile
+                        label Segundo apellido
+                        input(name="lastname2", ng-model="newUser.last_name_2", ng-maxlength="45")
+                        div(ng-messages="form.lastname2.$error")
+                            div(ng-message="maxlength") Máximo 45 caracteres
+
+
+                    md-input-container.input_profile
+                        label Teléfono
+                        input(name="phone", ng-model="newUser.phone", ng-maxlength="45")
+                        div(ng-messages="form.phone.$error")
+                            div(ng-message="maxlength") Máximo 45 caracteres
+
+
+                    md-input-container
+                        span.md-caption Sexo
+                        md-radio-group(ng-model="newUser.sex", layout="row")
+                            md-radio-button(value="H") Hombre
+                            md-radio-button(value="M") Mujer
+
+                    span.md-caption Fecha de nacimiento
+                    div
+                        div.no-margin.no-padding-tb(layout="row", flex)
+                            md-select.margin-8-left(name= "dia",ng-model="inputBirthday.day", placeholder="Dia")
+                                md-option(ng-repeat="item in days", ng-value="item") {{item}}
+                            md-select.margin-8-left(name= "month", ng-model="inputBirthday.month", placeholder="Mes")
+                                md-option(ng-repeat="(key, month) in months", ng-value="key+1") {{month}}
+                            md-select.margin-8-left(name= "year", ng-model="inputBirthday.year", placeholder="Año")
+                                md-option(ng-repeat="item in years", ng-value="item") {{item}}
+                        p.md-caption.margin-8-left.center_vertical.color-error(ng-if="errors.errorBirthday") Fecha errónea
+
+                    md-input-container
+                        md-button.md-primary(ng-click="changePassword = !changePassword") Cambiar contraseña
+
+                    md-input-container.input_profile(ng-show="changePassword")
+                        label Nueva contraseña
+                        input(name="newPass", ng-model="changePass.newPass", ng-maxlength="45", ng-minlength="1", type="password")
+                        div(ng-messages="form.newPass.$error")
+                            div(ng-message="maxlength") Máximo 45 caracteres
+                            div(ng-message="minlength") Mínimo 6 caracteres
+
+                    md-input-container.input_profile(ng-show="changePassword")
+                        label Repetir contraseña
+                        input(name="repPass", ng-model="changePass.repPass", ng-maxlength="45", type="password")
+                        div(ng-messages="form.repPass.$error")
+                            div(ng-message="maxlength") Máximo 45 caracteres
+                    span.md-caption.margin-8-left.center_vertical.color-error(ng-if="errors.password") Las contraseñas no coinciden
+
+                    md-input-container
+                        md-button.md-raised.md-primary(type="submit") Guardar perfil
