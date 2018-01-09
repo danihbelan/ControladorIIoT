@@ -1,8 +1,8 @@
 /**
- * Created by danihbelan on 14/9/17.
+ * Created by danihbelan on 27/12/17.
  */
 
-angular.module('myApp').controller("coordinatorViewProfile", ['$scope', '$http', '$location', '$timeout', 'lodash', '$q', '$mdDialog', 'Upload', '$rootScope',
+angular.module('myApp').controller("userViewProfile", ['$scope', '$http', '$location', '$timeout', 'lodash', '$q', '$mdDialog', 'Upload', '$rootScope',
   function($scope, $http, $location, $timeout, lodash, $q, $mdDialog, Upload, $rootScope) {
     var backUpActivities = [];
 

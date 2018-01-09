@@ -7,12 +7,13 @@ var express = require('express');
 var route = express.Router();
 //var util = require("../../privates/db/util");
 //var mysql = require('../../privates/db');
+var PLC = require('../../privates/softPLC/PLC')
 var csrfProtection = require("../../inits/csrf");
 //var schemeInput = require("../../privates/schemasJSON/schemasInput")
 //var multiparty = require('connect-multiparty');
 //var	multipartyMiddleware = multiparty();
-var fs = require('fs');
-var path = require('path');
+
+
 
 /**
  * Constructor de modulo
@@ -44,7 +45,26 @@ route.use(function(req, res, next) {
 	}
 });
 
+route.get("/startClient", csrfProtection,function(req, res){
+	PLC.startClient(function(result){
+    res.json(result)
+  });
+});
 
+route.get("/readData", csrfProtection,function(req, res){
+  //var idLed = req.session.internal.idLed
+  PLC.writeData(idLed,function(result){
+    res.json(result)
+  });
+});
+
+route.post("/writeData", csrfProtection,function(req, res){
+  var idLed = req.session.internal.idLed
+  var state = req.session.internal.state
+  PLC.writeData(idLed, state, function(result){
+    res.json(result)
+  });
+});
 
 
 

@@ -40,7 +40,6 @@ route.get('/login/login', csrfProtection, function(req, res) {
  ------- User -------
  ---------------------------*/
 route.get('/user/profile', csrfProtection, function(req, res) {
-  console.log('Entra en perfil')
 	res.render("user/view/profile" , {csrfToken : req.csrfToken()})
 });
 
