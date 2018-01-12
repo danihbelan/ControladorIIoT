@@ -4,10 +4,31 @@ md-content.md-padding(layout='column', flex,  ng-controller="userViewGeneralData
 
 	md-card
 		md-card-title
-			span.md-title Ejemplo
+			span.md-title Modulo BK9050
 		md-divider
 		md-card-content
-			p Contenido
+			div(flex='50', flex-gt-sm='50', layout='row')
+				div
+					fieldset.standard
+						legend KL2408
+						md-checkbox(ng-model='data.o1', aria-label='Output 1') Output 1: {{data.o1}}
+						md-checkbox(ng-model='data.o5', aria-label='Output 5') Output 5: {{data.o5}}
+						br
+						md-checkbox(ng-model='data.o2', aria-label='Output 2') Output 2: {{data.o2}}
+						md-checkbox(ng-model='data.o6', aria-label='Output 6') Output 6: {{data.o6}}
+						br
+						md-checkbox(ng-model='data.o3', aria-label='Output 3') Output 3: {{data.o3}}
+						md-checkbox(ng-model='data.o7', aria-label='Output 7') Output 7: {{data.o7}}
+						br
+						md-checkbox(ng-model='data.o4', aria-label='Output 4') Output 4: {{data.o4}}
+						md-checkbox(ng-model='data.o8', aria-label='Output 8') Output 8: {{data.o8}}
+					br
+					div(layout="row")
+						md-button.md-raised.md-primary(ng-click="clickWriteData()") Actualizar
+						md-button.md-raised.md-primary(ng-click="clickReadData()") Enviar
+
+
+
 
 
 

@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var compression = require('compression')
+var cors = require('cors')
 
 var parseurl = require('parseurl');
 var i18n = require("i18n");
@@ -32,6 +33,7 @@ i18n.configure({
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/images/favicon16.ico'));
 
+
 if (process.env.NODE_ENV !== 'test') {
   app.use(logger('[:date[web]] :method :status - :url :response-time ms - :res[content-length]',
     {
@@ -42,13 +44,7 @@ if (process.env.NODE_ENV !== 'test') {
   );
 }
 
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  //metodos http permitidos para CORS
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
+app.use(cors())
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

@@ -6,6 +6,17 @@ angular.module('myApp').controller("userViewGeneralData", ['$scope', '$q', '$htt
 	function($scope, $q, $http, $location, $timeout) {
 		var csrfKey;
 
+    $scope.data = {
+      o1: false,
+      o2: false,
+      o3: false,
+      o4: false,
+      o5: false,
+      o6: false,
+      o7: false,
+      o8: false
+    }
+
 		/**
 		 * Inicializador del controller
 		 */
@@ -33,14 +44,13 @@ angular.module('myApp').controller("userViewGeneralData", ['$scope', '$q', '$htt
 		 ----------- Buttons ----------
 		 ------------------------------ */
 
-    $scope.clickReadData = function () {
-      readData()
-    }
-
-    $scope.clickWriteData = function () {
+		$scope.clickWriteData = function () {
       writeData()
     }
 
+    $scope.clickReadData = function () {
+      readData()
+    }
 
 
 		/*--------------------------------
@@ -59,7 +69,7 @@ angular.module('myApp').controller("userViewGeneralData", ['$scope', '$q', '$htt
 					 dialog_errorResponse(response.data)
 					 }*/
           //implementar teniendo en cuenta el campo error de la respuesta
-          console.log(response)
+          console.log('Leyendo datos: ',response)
 
         }, function failed (data) {
 
@@ -68,8 +78,8 @@ angular.module('myApp').controller("userViewGeneralData", ['$scope', '$q', '$htt
 
     function writeData () {
       var json = {
-        idLed: 1,
-        state: true
+        idOutput: 1,
+        state: $scope.data.o1
       }
 
       var promised = $http.post('/m/u/writeData', json, default_HTTP)
@@ -80,8 +90,7 @@ angular.module('myApp').controller("userViewGeneralData", ['$scope', '$q', '$htt
 				 dialog_errorResponse(response.data)
 				 }*/
         //implementar teniendo en cuenta el campo error de la respuesta
-        console.log(response)
-        readData()
+        console.log('Escribiendo datos: ',response)
 
       }, function failed (data) {
 
