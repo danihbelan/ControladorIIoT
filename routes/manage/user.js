@@ -1,19 +1,19 @@
 /**
- * Contiene las funciones HTTP que gestionan el usuario
+ * Contiene las funciones HTTP que gestionan las rutas del usuario
  *
  * Created by danihbelan on 27/12/2017.
  */
 var express = require('express');
 var route = express.Router();
-//var util = require("../../privates/db/util");
-//var mysql = require('../../privates/db');
+var mysql = require('../../privates/database');
+var util = require("../../privates/database/util");
 var PLC = require('../../privates/softPLC/PLC')
 var csrfProtection = require("../../inits/csrf");
 
 
-
 /**
  * Constructor de modulo
+ *
  * @param app   Aplicacion NodeJS
  * @param settings  Configuracion
  * @param root  Path al que atendera este archivo
@@ -23,7 +23,8 @@ module.exports = function(app, settings, root){
 };
 
 /**
- * Comprobamos que el usuario esta logueado
+ * Funcion que comprueba que el usuario esta logueado
+ *
  * @param session   Session
  * @returns {*|boolean} Si esta o no autorizada
  */
@@ -44,12 +45,18 @@ route.use(function(req, res, next) {
 });
 
 
+/**
+ * Crea un cliente PLC
+ */
 route.get("/startClient", csrfProtection,function(req, res){
 	PLC.startClient(function(result){
     res.json(result)
   });
 });
 
+/**
+ * Ruta que lee un dato de una salida del modulo PLC
+ */
 route.get("/readData", csrfProtection, function(req, res){
   var idOutput = req.session.internal.idOutput
   PLC.readData(idOutput,function(result){
@@ -57,6 +64,9 @@ route.get("/readData", csrfProtection, function(req, res){
   });
 });
 
+/**
+ * Ruta que escribe un dato en una salida del modulo PLC
+ */
 route.post("/writeData", csrfProtection, function(req, res){
   var idOutput = req.session.internal.idOutput
   var state = req.session.internal.state

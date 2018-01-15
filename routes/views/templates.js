@@ -5,7 +5,6 @@
  */
 'use strict';
 var async = require("async");
-//var util = require("./../privates/db/util");
 var csrfProtection = require("../../inits/csrf");
 
 
@@ -14,6 +13,7 @@ var route = express.Router();
 
 /**
  * Constructor de modulo
+ *
  * @param app   Aplicacion NodeJS
  * @param settings  Configuracion
  * @param root  Path al que atendera este archivo

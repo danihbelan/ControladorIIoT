@@ -7,8 +7,13 @@
  * Created by danihbelan on 26/12/2017.
  */
 
+/**
+ * Función encargada de cargar los archivos que contienen rutas
+ *
+ * @param app
+ * @param settings
+ */
 module.exports = function(app, settings){
-  // Aqui se cargan los archivos que contienen rutas
   require('./manage/user')(app, settings, '/m/u/');
   require('./manage/general')(app, settings, '/m/g/');
   require('./views/templates')(app, settings, '/temp');

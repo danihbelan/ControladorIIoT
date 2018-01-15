@@ -1,4 +1,6 @@
 /**
+ * Archivo con las constantes necesarias para el servicio web
+ *
  * Created by danihbelan on 26/12/2017.
  */
 
@@ -10,7 +12,7 @@ exports.keySSL = './privates/SSL/selfsigned.key';
 exports.certSSL = './privates/SSL/selfsigned.cert';
 
 //Indicamos si queremos conectar por ssh
-exports.sshNeed = true;
+exports.sshNeed = false;
 
 // //Variables del SSH (Ignorado si sshConnection = false)
 // exports.ssh = {
@@ -20,15 +22,15 @@ exports.sshNeed = true;
 //         password : 'medicinaCajal',
 // };
 //
-// exports.db = {
-//         port : 3306,
-//         user : 'user_extern',
-//         password : 'medicinaCajal',
-//         database : 'cajalGranada3', // Uno que tengamos libre en nuestra maquina
-//         connectionLimit : 10,
-//         timeout: 24000,
-// 		multipleStatements: true
-// };
+exports.db = {
+        host: 'localhost',
+        user : 'root',
+        password : 'toor',
+        database : 'prueba', // Uno que tengamos libre en nuestra maquina
+        connectionLimit : 10,
+        timeout: 24000,
+		multipleStatements: true
+};
 
 exports.dbSession = {
         host: "localhost",

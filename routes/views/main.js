@@ -5,10 +5,10 @@
  */
 'use strict';
 var async = require("async");
-//var util = require("./../../privates/db/util");
 
 var csrfProtection = require("../../inits/csrf");
-//var db = require('../../privates/db');
+var mysql = require('../../privates/database');
+var util = require("./../../privates/database/util");
 var fs = require('fs');
 var lodash = require('lodash');
 
@@ -17,6 +17,7 @@ var route = express.Router();
 
 /**
  * Constructor de modulo
+ *
  * @param app   Aplicacion NodeJS
  * @param settings  Configuracion
  * @param root  Path al que atendera este archivo
@@ -25,9 +26,6 @@ module.exports = function(app, settings, root){
 	app.use(root,route);
 };
 
-/* ---------------------
- ------- Metodos -------
- ----------------------*/
 
 /**
  * Pantalla de login
@@ -38,10 +36,16 @@ route.get('/', csrfProtection, function(req, res, next) {
 	res.render('login', {csrfToken : csrf});
 });
 
+/**
+ * Pantalla de login
+ */
 route.get('/index', csrfProtection, function(req, res, next) {
 	res.render('login', {csrfToken : req.csrfToken()});
 });
 
+/**
+ * Pantallas de usuario
+ */
 route.get('/user*',csrfProtection, function(req, res) {
   initUser(req, res)
 });

@@ -5,11 +5,12 @@
  */
 var express = require('express');
 var route = express.Router();
-//var util = require("../../privates/db/util");
-//var mysql = require('../../privates/db');
+var mysql = require('../../privates/database');
+var util = require("../../privates/database/util");
 var csrfProtection = require("../../inits/csrf");
 /**
  * Constructor de modulo
+ *
  * @param app   Aplicacion NodeJS
  * @param settings  Configuracion
  * @param root  Path al que atendera este archivo
@@ -21,11 +22,7 @@ module.exports = function(app, settings, root){
 
 /**
  * Loguea a un usuario
- *
  * Si se ha logueado correctamente almacenaremos en la sesion idUser
- *
- * Registros de sesion que completa:
- *      req.session.internal.idUser
  */
 route.post("/login", csrfProtection, function(req, res) {
     var name = req.body.name;
