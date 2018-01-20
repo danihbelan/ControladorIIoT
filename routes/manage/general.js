@@ -1,5 +1,6 @@
 /**
  * Contiene las funciones HTTP que gestionan las rutas generales
+ * En su mayoría se trata de peticiones a la base de datos
  *
  * Created by danihbelan on 27/12/2017.
  */

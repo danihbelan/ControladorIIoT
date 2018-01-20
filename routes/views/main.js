@@ -26,7 +26,6 @@ module.exports = function(app, settings, root){
 	app.use(root,route);
 };
 
-
 /**
  * Pantalla de login
  */

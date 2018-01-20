@@ -15,8 +15,8 @@ var output = {
 };
 
 "use strict";
-//Function for starting the client. Defined in "webservice.js"
 
+//Function for starting the client. Defined in "webservice.js"
 exports.startClient = function (callbak) {
   //TODO Llamar a la funcion que lee la configuración XML
 

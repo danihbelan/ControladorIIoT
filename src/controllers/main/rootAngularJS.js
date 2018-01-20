@@ -3,7 +3,7 @@
  */
 
 var myApp = angular.module('myApp', ['md.data.table', 'ngMaterial', 'ngMessages', 'ngRoute', 'mp.autoFocus',
-	'chart.js', 'ngLodash', 'angularMoment', 'ngFileUpload', 'ngImgCrop', 'mdPickers', 'ngCsvImport']);
+	'chart.js', 'ngLodash', 'angularMoment', 'ngFileUpload', 'ngImgCrop', 'mdPickers']);
 /**
  * Definimos los colores que vamos a utilizar https://material.angularjs.org/0.10.0/#/Theming/03_configuring_a_theme
  */

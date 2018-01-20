@@ -1,11 +1,11 @@
 /**
  * Contiene las funciones HTTP que gestionan las rutas del usuario
+ * En su mayoría se trata de peticiones al PLC
  *
  * Created by danihbelan on 27/12/2017.
  */
 var express = require('express');
 var route = express.Router();
-var mysql = require('../../privates/database');
 var util = require("../../privates/database/util");
 var PLC = require('../../privates/softPLC/PLC')
 var csrfProtection = require("../../inits/csrf");

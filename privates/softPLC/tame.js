@@ -6,10 +6,9 @@
  * 
  * Dual licensed under:
  *  MIT - http://www.opensource.org/licenses/mit-license
- *  GPLv3 - http://www.opensource.org/licenses/GPL-3.0
+ *  GPLv3 - gpl
  * 
  */
-
 
 
 

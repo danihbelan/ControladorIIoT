@@ -2,7 +2,7 @@
  * Created by danihbelan on 26/12/2017.
  */
 
-angular.module('myApp',['ngRoute']).config(['$routeProvider','$locationProvider',
+angular.module('myApp').config(['$routeProvider','$locationProvider',
     function($routeProvider, $locationProvider) {
 
        $routeProvider

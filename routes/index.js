@@ -17,6 +17,5 @@ module.exports = function(app, settings){
   require('./manage/user')(app, settings, '/m/u/');
   require('./manage/general')(app, settings, '/m/g/');
   require('./views/templates')(app, settings, '/temp');
-  //require('./views/directives')(app, settings, '/directives');
   require('./views/main')(app, settings, '/');
 };
