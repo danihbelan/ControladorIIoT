@@ -41,11 +41,15 @@ function description(error, descripcion){
 		case -1: return "Error desconocido";
 		case 0 : return "Ok";
 		case 1 : return "Petición mal formulada";
+    case 2 : return "Error en el servidor, contacte con administracion";
+    case 100 : return "Usuario o password incorrecto";
+    case 101 : return "No existe usuario registrado con ese nombre";
+    case 103 : return "Fallo al obtener los datos generales";
 
 
 
 		//==== Usuario =====
-		case 1100: return "No es un usuario";
+		case 1000: return "No es un usuario";
 
 
 	}

@@ -29,29 +29,11 @@ route.post("/login", csrfProtection, function(req, res) {
     var name = req.body.name;
     var password = req.body.pass;
 
-    mysql.general.login(email, password, function(result){
+    mysql.general.login(name, password, function(result){
         if(result.error == 0){
-	        var user = result.result;
-            req.session.internal.idUser = user.id;
-            req.session.internal.permises = user.permises;
-
-            //Comprobamos si solo tiene un permiso y en tal caso asignarlo al rol del usuario
-            if(req.session.internal.permises == 1){
-                req.session.internal.idRol = user.permises[0];
-            }
-
+          var user = result.result;
+          req.session.internal.idUser = user.id;
 	        req.session.user = user;
-
-	        //Quitamos datos que al usuario no le interesan
-	        delete user.old_password;
-	        delete user.password;
-	        delete user.recover_password;
-	        delete user.isValidate;
-	        delete user.tokenMail;
-	        delete user.isValidateMail;
-
-	        result.result = user;
-
         }
         res.json(result);
     });

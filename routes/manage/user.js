@@ -29,7 +29,7 @@ module.exports = function(app, settings, root){
  * @returns {*|boolean} Si esta o no autorizada
  */
 function isAuthorized(session){
-	return session.id;
+  return session.id;
 }
 
 
@@ -37,10 +37,10 @@ function isAuthorized(session){
  * Filtramos todas las llamadas para comprobar que existe sesion
  */
 route.use(function(req, res, next) {
-	if(isAuthorized(req.session)){
+  if(isAuthorized(req.session)){
 		next();
 	}else{
-		res.json(util.responseJSON(1100));
+		res.json(util.responseJSON(1000));
 	}
 });
 

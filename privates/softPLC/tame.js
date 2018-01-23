@@ -984,6 +984,11 @@ const window = new Window();
                                 }
                             }
                         };
+                        //Añadimos credenciales para permitir el CORS
+                        this.xmlHttpReq.withCredentials = true
+                        this.xmlHttpReq.open('GET', '')
+                        this.xmlHttpReq.open('POST', '')
+
                         this.xmlHttpReq.send(soapReq);
                     } else {
                         //synchronous request

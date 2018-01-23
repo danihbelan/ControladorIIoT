@@ -34,18 +34,12 @@ angular.module('myApp').controller("loginLogin", ['$scope', '$q', '$http', '$win
 					if(data.error == 0){
 						// Guardamos el usuario en sesion
 						user = data.result;
+
             // Accedemos a la pagina principal
             $window.location.href = "/user/index";
 
-					//TODO Definir los errores
-					}else if(data.error == 100 ||
-						data.error == 111 ||
-						data.error == 110){
-
+					}else if(data.error == 100 || data.error == 101){
 						dialog_error("Error",data.description)
-
-					}else if(data.error == 99) {
-						dialog_error("Usuario no validado",data.description)
 
 					}else{
 						dialog_errorResponse(data)

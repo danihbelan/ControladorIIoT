@@ -46,7 +46,8 @@ route.get('/index', csrfProtection, function(req, res, next) {
  * Pantallas de usuario
  */
 route.get('/user*',csrfProtection, function(req, res) {
-  initUser(req, res)
+	console.log('ruta /user:',req.session.internal)
+	initUser(req, res)
 });
 
 function renderError(res, head, text){
@@ -59,15 +60,13 @@ function renderError(res, head, text){
 
 
 function initUser(req, res){
-  //Comprobamos DEBE estar relleno el idUser
-  /*if (!req.session.internal.idUser) {
+  //TODO implementar bien el acceso
+	//Comprobamos DEBE estar relleno el idUser
+	/*if (!req.session.internal.idUser) {
     // Si no esta logueado lo enviamos al login
     res.redirect("/");
     return;
-  }
-  var idUser = req.session.internal.idUser;*/
-
-	//Otras comprobaciones pertinentes
+  }*/
 
   res.render('index', {logued: req.session.user,
     csrfToken : req.csrfToken()
