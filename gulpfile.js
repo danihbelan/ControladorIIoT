@@ -8,13 +8,22 @@ var concat = require('gulp-concat');
 var plumber = require('gulp-plumber'); // Hace que watch no crashee al encontrar un error
 var pkg = require('./package.json');
 
-gulp.task('page', function () {
-  gulp.src('./src/app/page/**')
+gulp.task('pages', function () {
+  gulp.src('./src/app/pages/**')
     //.pipe(plumber())
     //.pipe(concat('app.min.js'))
     //.pipe(uglify())
     //.pipe(plumber.stop())
-    .pipe(gulp.dest('./public/admin/app'))
+    .pipe(gulp.dest('./public/admin/app/pages'))
+});
+
+gulp.task('theme', function () {
+  gulp.src('./src/app/theme/**')
+  //.pipe(plumber())
+  //.pipe(concat('app.min.js'))
+  //.pipe(uglify())
+  //.pipe(plumber.stop())
+    .pipe(gulp.dest('./public/admin/app/theme'))
 });
 
 gulp.task('app', function () {
@@ -35,9 +44,9 @@ gulp.task('auth', function () {
     .pipe(gulp.dest('./public/auth'))
 });
 
-gulp.task('all', ['page','app','auth']);
+gulp.task('all', ['pages', 'theme','app','auth']);
 
 
 gulp.task('watch', function () {
-  gulp.watch('./src/**/*.js', ['all']);
+  gulp.watch('./src/**/*', ['all']);
 });
