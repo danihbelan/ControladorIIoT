@@ -20,8 +20,10 @@ var routes;
 global.appRoot = path.resolve(__dirname);
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+//app.set('views', path.join(__dirname, 'views'));
+app.set('admin_path',path.join(__dirname,'views', path.sep));
 app.set('view engine', 'jade');
+
 
 // Configuramos el i18n
 i18n.configure({
@@ -110,7 +112,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('404');
 });
 
 

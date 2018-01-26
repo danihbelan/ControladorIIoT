@@ -8,53 +8,36 @@ var concat = require('gulp-concat');
 var plumber = require('gulp-plumber'); // Hace que watch no crashee al encontrar un error
 var pkg = require('./package.json');
 
-gulp.task('user', function () {
-	gulp.src('./src/controllers/user/**/*.js')
-		.pipe(plumber())
-		.pipe(concat('user.min.js'))
-		//.pipe(uglify())
-		.pipe(plumber.stop())
-		.pipe(gulp.dest('./public/dist'))
+gulp.task('page', function () {
+  gulp.src('./src/app/page/**')
+    //.pipe(plumber())
+    //.pipe(concat('app.min.js'))
+    //.pipe(uglify())
+    //.pipe(plumber.stop())
+    .pipe(gulp.dest('./public/admin/app'))
 });
 
-gulp.task('general', function () {
-	gulp.src('./src/controllers/general/**/*.js')
-		.pipe(plumber())
-		.pipe(concat('general.min.js'))
-		//.pipe(uglify())
-		.pipe(plumber.stop())
-		.pipe(gulp.dest('./public/dist'))
+gulp.task('app', function () {
+  gulp.src('./src/app/app.js')
+  //.pipe(plumber())
+  //.pipe(concat('app.min.js'))
+  //.pipe(uglify())
+  //.pipe(plumber.stop())
+    .pipe(gulp.dest('./public/admin/app'))
 });
 
-gulp.task('login', function () {
-	gulp.src('./src/controllers/login/**/*.js')
-		.pipe(plumber())
-		.pipe(concat('login.min.js'))
-		//.pipe(uglify())
-		.pipe(plumber.stop())
-		.pipe(gulp.dest('./public/dist'))
+gulp.task('auth', function () {
+  gulp.src('./src/app/auth/**')
+  //.pipe(plumber())
+  //.pipe(concat('app.min.js'))
+  //.pipe(uglify())
+  //.pipe(plumber.stop())
+    .pipe(gulp.dest('./public/auth'))
 });
 
-gulp.task('routesJS', function () {
-	gulp.src('./src/controllers/main/**/*.js')
-		.pipe(plumber())
-		.pipe(concat('routesJS.min.js'))
-		//.pipe(uglify())
-		.pipe(plumber.stop())
-		.pipe(gulp.dest('./public/dist'))
-});
+gulp.task('all', ['page','app','auth']);
 
-gulp.task('utilFunctions', function () {
-	gulp.src('./src/js/utilFunctions.js')
-		.pipe(plumber())
-		.pipe(concat('utilFunctions.min.js'))
-		//.pipe(uglify())
-		.pipe(plumber.stop())
-		.pipe(gulp.dest('./public/dist'))
-});
-
-gulp.task('all', ['user','general','login', 'routesJS','utilFunctions']);
 
 gulp.task('watch', function () {
-	gulp.watch('./src/**/*.js', ['all']);
+  gulp.watch('./src/**/*.js', ['all']);
 });
