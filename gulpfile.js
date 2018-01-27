@@ -11,7 +11,7 @@ var pkg = require('./package.json');
 gulp.task('pages', function () {
   gulp.src('./src/app/pages/**')
     //.pipe(plumber())
-    //.pipe(concat('app.min.js'))
+    //.pipe(concat('pages.min.js'))
     //.pipe(uglify())
     //.pipe(plumber.stop())
     .pipe(gulp.dest('./public/admin/app/pages'))
