@@ -8,8 +8,6 @@ var express = require('express');
 var route = express.Router();
 var util = require("../../privates/database/util");
 var PLC = require('../../privates/softPLC/PLC')
-var csrfProtection = require("../../inits/csrf");
-
 
 /**
  * Constructor de modulo
@@ -48,8 +46,8 @@ route.use(function(req, res, next) {
 /**
  * Crea un cliente PLC
  */
-route.get("/startClient", csrfProtection,function(req, res){
-	PLC.startClient(function(result){
+route.get("/startClient",function(req, res){
+  PLC.startClient(function(result){
     res.json(result)
   });
 });
@@ -57,7 +55,7 @@ route.get("/startClient", csrfProtection,function(req, res){
 /**
  * Ruta que lee un dato de una salida del modulo PLC
  */
-route.get("/readData", csrfProtection, function(req, res){
+route.get("/readData", function(req, res){
   var idOutput = req.session.internal.idOutput
   PLC.readData(idOutput,function(result){
     res.json(result)
@@ -67,9 +65,11 @@ route.get("/readData", csrfProtection, function(req, res){
 /**
  * Ruta que escribe un dato en una salida del modulo PLC
  */
-route.post("/writeData", csrfProtection, function(req, res){
-  var idOutput = req.session.internal.idOutput
-  var state = req.session.internal.state
+route.post("/writeData", function(req, res){
+  console.log('Ruta /writeData')
+  var idOutput = req.body.idOut
+  var state = req.body.state
+  console.log('id: ' + idOutput + ' state: ' + state)
   PLC.writeData(idOutput, state, function(result){
     res.json(result)
   });

@@ -19,12 +19,12 @@ route.get('/', function(req, res, next) {
   console.log(req.path);
 });
 
-route.get('/admin', function(req, res, next) {
+route.get('/authSignIn', function(req, res, next) {
   res.sendFile(req.app.get("admin_path")+"index.html");
   console.log(req.path);
 });
 
-route.get('/authSignIn', function(req, res, next) {
+route.get('/admin', function(req, res, next) {
   res.sendFile(req.app.get("admin_path")+"index.html");
   console.log(req.path);
 });
