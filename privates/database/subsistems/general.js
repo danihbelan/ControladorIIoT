@@ -5,7 +5,6 @@
 "use strict";
 var mysql = require("./../index");
 var async = require("async");
-var lodash = require("lodash");
 var config = require('../../../constantes');
 
 /**
@@ -17,9 +16,9 @@ var config = require('../../../constantes');
  */
 exports.login = function(input, password, callback){
   var qLogin =
-    "SELECT id, name, password "+
-    "FROM users " +
-    "WHERE name = ?";
+    "SELECT id, name, last_name_1, last_name_2, mail, password, phone"+
+    "FROM Users " +
+    "WHERE mail = ?";
 
   mysql.query(qLogin,[input], function (err, user){
     if(err){

@@ -5,16 +5,16 @@
     .controller('authSignInCtrl', authSignInCtrl);
 
   /** @ngInject */
-  function authSignInCtrl($http, $scope, localStorage, $state) {
+  function authSignInCtrl($http, $scope, $state) {
 
     $scope.initController = function () {
       console.log('se inicia')
-      localStorage.clear()
     }
 
-    $scope.login = function () {
+    $scope.clickLogin = function () {
+      console.log('login')
       var datosUser = {
-        'user': $scope.user,
+        'mail': $scope.mail,
         'password': $scope.password
       }
       console.log(datosUser)
@@ -35,4 +35,5 @@
     }
 
   }
+
 })();

@@ -15,6 +15,5 @@
  */
 module.exports = function(app, settings){
   require('./manage/user')(app, settings, '/m/u/');
-  //require('./adminRoutes')(app, settings, '/admin');
-  require('./main')(app, settings, '/');
+  require('./manage/main')(app, settings, '/');
 };

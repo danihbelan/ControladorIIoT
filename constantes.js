@@ -26,7 +26,7 @@ exports.db = {
         host: 'localhost',
         user : 'root',
         password : 'toor',
-        database : 'prueba', // Uno que tengamos libre en nuestra maquina
+        database : 'softPLC_dataBase', // Uno que tengamos libre en nuestra maquina
         connectionLimit : 10,
         timeout: 24000,
 		multipleStatements: true

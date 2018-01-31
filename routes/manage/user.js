@@ -1,6 +1,6 @@
 /**
  * Contiene las funciones HTTP que gestionan las rutas del usuario
- * En su mayoría se trata de peticiones al PLC
+ * En su mayoría se trata de peticiones al PLC o la base de datos
  *
  * Created by danihbelan on 27/12/2017.
  */
@@ -41,7 +41,6 @@ route.use(function(req, res, next) {
 		res.json(util.responseJSON(1000));
 	}
 });
-
 
 /**
  * Crea un cliente PLC
