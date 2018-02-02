@@ -40,6 +40,7 @@ var output = {
   8: '.MAIN.VAR8'
 };
 
+
 "use strict";
 
 //Function for starting the client. Defined in "webservice.js"
@@ -52,6 +53,8 @@ exports.startClient = function (callbak) {
 //This function is called if client is ready (on-ready-function).
 //See "webservice.js"
 function loadFunctions() {
+    var data
+
     /**
      * Escribe un valor en una salida del modulo KL2408
      *
@@ -75,8 +78,8 @@ function loadFunctions() {
         Plc.readBool({name: output.idOutput, jvar: 'data', oc: callback(data), ocd: 50});
     };
 
-    readData(1, function () {
-     console.log('Leido!')
+    readData(1, function (data) {
+     console.log('Leido!', data)
     })
 
 };

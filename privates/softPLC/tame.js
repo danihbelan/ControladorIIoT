@@ -948,9 +948,9 @@ const window = new Window();
 
                 //Send the AJAX request.
                 if (typeof this.xmlHttpReq === 'object') {
-
                     this.xmlHttpReq.open('POST', service.serviceUrl, async, service.serviceUser, service.servicePassword);
 
+                    //this.xmlHttpReq.setRequestHeader('Access-Control-Allow-Origin', '*');
                     this.xmlHttpReq.setRequestHeader('SOAPAction', 'http://beckhoff.org/action/TcAdsSync.' + this.method);
                     this.xmlHttpReq.setRequestHeader('Content-Type', 'text/xml; charset=utf-8');
 
@@ -984,11 +984,7 @@ const window = new Window();
                                 }
                             }
                         };
-                        //Añadimos credenciales para permitir el CORS
-                        // this.xmlHttpReq.withCredentials = true
-                        // this.xmlHttpReq.open('GET', '')
-                        // this.xmlHttpReq.open('POST', '')
-
+                        console.log('Enviando...')
                         this.xmlHttpReq.send(soapReq);
                     } else {
                         //synchronous request
