@@ -24,7 +24,7 @@ var requestPLC = function (handles) {
         serviceUrl: 'http://localhost/TcAdsWebService/TcAdsWebService.dll',
         amsNetId: '192.168.30.101.1.1',
         amsPort: '851',       //AMS port
-        //useHandles: handles,  //use handles
+        useHandles: handles,  //use handles
         alignment: '8',       //default, set it to "4" if you have TC2 and an ARM based PLC device (i.e. CX90xx), to 8 with TC3
         onReady: loadFunctions          //contiene las funciones de control
     });
