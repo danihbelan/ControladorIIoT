@@ -478,7 +478,7 @@ const window = new Window();
                 log('TAME library error: IndexGroup is not a number, check address or name definition of the variable/request!');
                 log(req);
             }
-
+            log(req);
             return indexGroup;
         }
 
@@ -984,7 +984,6 @@ const window = new Window();
                                 }
                             }
                         };
-                        console.log('Enviando...')
                         this.xmlHttpReq.send(soapReq);
                     } else {
                         //synchronous request

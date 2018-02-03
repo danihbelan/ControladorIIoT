@@ -2,87 +2,118 @@
  * Created by danihbelan on 22/12/17.
  */
 
+"use strict";
+var util = require('./util')
+
 /***********************************
  ----------- WebService ------------
  **********************************/
 var Plc;
 var TAME = require('./tame.js')
+var loadFunctions
 
-var startClient = function(handles) {
+/**
+ * Función encargada de realizar las request al PLC
+ *
+ * @param handles
+ * @returns {Object|any|*}
+ */
+var requestPLC = function (handles) {
 
-    Plc =  TAME.WebServiceClient.createClient({
-        serviceUrl: 'http://192.168.30.100/TcAdsWebService/TcAdsWebService.dll',
-        //configFileUrl: 'http://192.168.1.2/tamex/resources/demo2.tpy',  //Path to the TPY file
+    Plc = TAME.WebServiceClient.createClient({
+        serviceUrl: 'http://localhost/TcAdsWebService/TcAdsWebService.dll',
         amsNetId: '192.168.30.101.1.1',
-        amsPort: '851',       //default
-        useHandles: handles,    //use handles
+        amsPort: '851',       //AMS port
+        //useHandles: handles,  //use handles
         alignment: '8',       //default, set it to "4" if you have TC2 and an ARM based PLC device (i.e. CX90xx), to 8 with TC3
-        //language: 'ge',       //default, set it to "en" for english names of days and months
-        onReady: loadFunctions    //contiene las funciones de control
+        onReady: loadFunctions          //contiene las funciones de control
     });
-    console.log('PLC creado')
-    return Plc
-}
 
+}
 
 
 /***********************************
  --------------- PLC ---------------
  **********************************/
 var output = {
-  1: '.MAIN.VAR1',
-  2: '.MAIN.VAR2',
-  3: '.MAIN.VAR3',
-  4: '.MAIN.VAR4',
-  5: '.MAIN.VAR5',
-  6: '.MAIN.VAR6',
-  7: '.MAIN.VAR7',
-  8: '.MAIN.VAR8'
+    1: '.VAR1',
+    2: '.VAR2',
+    3: '.VAR3',
+    4: '.VAR4',
+    5: '.VAR5',
+    6: '.VAR6',
+    7: '.VAR7',
+    8: '.VAR8'
+};
+var field1 = null;
+
+
+//**Funciones a exportar para llamar desde el gestor de rutas**
+//**Lamada usando reflexiones para acceder a funciones dentro de la funcion loadFuctions**
+
+//Ejemplo de funcion llamada desde el cliente
+exports.startClient = function (callback) {
+
+    callback()
 };
 
-
-"use strict";
-
-//Function for starting the client. Defined in "webservice.js"
-exports.startClient = function (callbak) {
-  Plc = startClient();
-  callbak()
-};
-
-
-//This function is called if client is ready (on-ready-function).
-//See "webservice.js"
-function loadFunctions() {
+/**
+ * Función que escribe un boolean en una salida digital
+ *
+ * @param id        identificador de la salida
+ * @param callback  Función callback
+ */
+exports.readData = function (id, callback) {
     var data
+    loadFunctions = function () {
+        console.log('Reading...')
+        var res = function () {
+            console.log('Estado despues de leer: ' + data)
+            var salida = {state: data}
+            callback(util.responseJSON(0, salida))
+        }
 
-    /**
-     * Escribe un valor en una salida del modulo KL2408
-     *
-     * @param idOutput
-     * @param state
-     * @param callback
-     */
-    var writeData = function(idOutput, state, callback) {
-        var wert = state;
-        Plc.writeBool({name: output.idOutput, val: wert, oc: callback(), ocd: 50});
-    };
-
-    /**
-     * Lee un valor de una salida del modulo KL2408
-     *
-     * @param idOutput
-     * @param callback
-     */
-    var readData = function(idOutput, callback) {
-        console.log('Leyendo..')
-        Plc.readBool({name: output.idOutput, jvar: 'data', oc: callback(data), ocd: 50});
-    };
-
-    readData(1, function (data) {
-     console.log('Leido!', data)
-    })
-
+        var handles = Plc.getHandles({
+            symbols: [
+                '.In_Bool1', '.In_Bool2', '.IN_SINT1', '.IN_INT1', '.IN_DINT', '.IN_STRING',
+                '.IN_TIME', '.IN_REAL', '.TOD_TEST', '.DT_TEST', '.DATE_TEST',
+                'MAIN.fbRamp1.nRamp', 'MAIN.fbRamp2.nRamp'],
+            oc: function() {
+                console.log('HANDLES:' + handles)
+                Plc.readBool({name: output[id], jvar: 'data', oc: res, ocd: 50});
+            }
+        });
+    }
+    requestPLC()
 };
+
+/**
+ * Función que lee el estado de una salida/entrada digital
+ *
+ * @param id        identificador de la salida/entrada
+ * @param state     valor a escribir
+ * @param callback  Función callback
+ */
+exports.writeData = function (id, state, callback) {
+    var data
+    loadFunctions = function () {
+        var res = function () {
+            console.log('Estado despues de escibir: ' + data)
+            var salida = {state: data}
+            callback(util.responseJSON(0, salida))
+        }
+
+        var readValue = function () {
+            Plc.readBool({name: output[id], jvar: 'data', oc: res, ocd: 50});
+        };
+
+        Plc.writeBool({name: output[id], val: state, oc: readValue, ocd: 50})
+
+    }
+    requestPLC()
+};
+
+
 
 
 
