@@ -9,7 +9,7 @@
       .controller('dashboardCtrl', dashboardCtrl);
 
   /** @ngInject */
-  function dashboardCtrl($scope, $timeout, baConfig, baUtil, $element, layoutPaths) {
+  function dashboardCtrl($scope, $http, $timeout, baConfig, baUtil, $element, layoutPaths) {
 
     $scope.temperature = 24.5
 

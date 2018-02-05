@@ -57,10 +57,10 @@ route.post("/readData", function (req, res) {
  * Ruta que escribe un dato en una salida del modulo PLC
  */
 route.post("/writeData", function (req, res) {
-    var id = req.body.id
-    var state = req.body.state
+    var ids = req.body.ids
+    var states = req.body.states
 
-    PLC.writeData(id, state, function (result) {
+    PLC.writeData(ids, states, function (result) {
         res.json(result)
     });
 });

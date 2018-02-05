@@ -9,6 +9,7 @@
     'ui.router',
 
     'BlurAdmin.pages.dashboard',
+    'BlurAdmin.pages.terminals',
     'BlurAdmin.pages.profile'
   ])
       .config(routeConfig);
@@ -16,6 +17,12 @@
   /** @ngInject */
   function routeConfig($urlRouterProvider, baSidebarServiceProvider) {
     $urlRouterProvider.otherwise('dashboard');
+
+    baSidebarServiceProvider.addStaticItem({
+        title: 'Terminals',
+        icon: 'fa fa-building',
+        stateRef: 'terminals'
+    });
 
     baSidebarServiceProvider.addStaticItem({
       title: 'Profile',

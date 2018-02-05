@@ -18,13 +18,13 @@ var loadFunctions
  * @param handles
  * @returns {Object|any|*}
  */
-var requestPLC = function (handles) {
+var requestPLC = function () {
 
     Plc = TAME.WebServiceClient.createClient({
         serviceUrl: 'http://localhost/TcAdsWebService/TcAdsWebService.dll',
         amsNetId: '192.168.30.101.1.1',
         amsPort: '851',       //AMS port
-        useHandles: handles,  //use handles
+        useHandles: false,  //use handles
         alignment: '8',       //default, set it to "4" if you have TC2 and an ARM based PLC device (i.e. CX90xx), to 8 with TC3
         onReady: loadFunctions          //contiene las funciones de control
     });
@@ -35,18 +35,27 @@ var requestPLC = function (handles) {
 /***********************************
  --------------- PLC ---------------
  **********************************/
-var output = {
-    1: '.VAR1',
-    2: '.VAR2',
-    3: '.VAR3',
-    4: '.VAR4',
-    5: '.VAR5',
-    6: '.VAR6',
-    7: '.VAR7',
-    8: '.VAR8'
+var outputBool = {
+    1: '.OUT_BOOL_1',
+    2: '.OUT_BOOL_2',
+    3: '.OUT_BOOL_3',
+    4: '.OUT_BOOL_4',
+    5: '.OUT_BOOL_5',
+    6: '.OUT_BOOL_6',
+    7: '.OUT_BOOL_7',
+    8: '.OUT_BOOL_8'
 };
-var field1 = null;
 
+var inputBool = {
+    1: '.IN_BOOL_1',
+    2: '.IN_BOOL_2',
+    3: '.IN_BOOL_3',
+    4: '.IN_BOOL_4',
+    5: '.IN_BOOL_5',
+    6: '.IN_BOOL_6',
+    7: '.IN_BOOL_7',
+    8: '.IN_BOOL_8'
+};
 
 //**Funciones a exportar para llamar desde el gestor de rutas**
 //**Lamada usando reflexiones para acceder a funciones dentro de la funcion loadFuctions**
@@ -79,7 +88,6 @@ exports.readData = function (id, callback) {
                 '.IN_TIME', '.IN_REAL', '.TOD_TEST', '.DT_TEST', '.DATE_TEST',
                 'MAIN.fbRamp1.nRamp', 'MAIN.fbRamp2.nRamp'],
             oc: function() {
-                console.log('HANDLES:' + handles)
                 Plc.readBool({name: output[id], jvar: 'data', oc: res, ocd: 50});
             }
         });
@@ -94,7 +102,7 @@ exports.readData = function (id, callback) {
  * @param state     valor a escribir
  * @param callback  Función callback
  */
-exports.writeData = function (id, state, callback) {
+exports.writeData = function (ids, states, callback) {
     var data
     loadFunctions = function () {
         var res = function () {
@@ -104,10 +112,13 @@ exports.writeData = function (id, state, callback) {
         }
 
         var readValue = function () {
-            Plc.readBool({name: output[id], jvar: 'data', oc: res, ocd: 50});
+            //Plc.readBool({name: outputBool[id], jvar: 'data', oc: res, ocd: 50});
         };
 
-        Plc.writeBool({name: output[id], val: state, oc: readValue, ocd: 50})
+       for(var i=0; i<ids.length; i++){
+            Plc.writeBool({name: outputBool[ids[i]], val: states[i], oc: readValue, ocd: 50})
+        }
+
 
     }
     requestPLC()

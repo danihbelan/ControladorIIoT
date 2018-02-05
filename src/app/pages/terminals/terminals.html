@@ -1,0 +1,32 @@
+<div ng-repeat="ter in terminals">
+  <div ba-panel ba-panel-title= {{ter.name}} ({{ter.terminal}}) ba-panel-class="with-scroll">
+    <table class="table table-hover table-condensed">
+      <tr class="black-muted-bg">
+        <th class="left">NAME</th>
+        <th class="left">VARIABLE</th>
+        <th class="left">STATE</th>
+        <th class="left">ACTIONS</th>
+      </tr>
+      <tr ng-repeat="port in ter.ports" class="no-top-border">
+        <td>
+          {{ port.name  }}
+        </td>
+        <td>
+          {{ port.var  }}
+        </td>
+        <td>
+          {{ port.state  }}
+        </td>
+        <td>
+          <ba-switcher switcher-style="primary" switcher-value="port.newState"></ba-switcher>
+        </td>
+      </tr>
+    </table>
+
+    <div class="add-row-editable-table">
+      <br>
+      <button class="btn btn-primary" ng-click="clickReadData(ter.id)">Update data</button>
+      <button class="btn btn-success" ng-click="clickWriteData(ter.id)">Change data</button>
+    </div>
+  </div>
+</div>
