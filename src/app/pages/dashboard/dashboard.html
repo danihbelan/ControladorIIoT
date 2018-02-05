@@ -1,22 +1,110 @@
-<dashboard-pie-chart></dashboard-pie-chart>
 
-<div ba-panel ba-panel-title="Modulo KL2408" ba-panel-class="with-scroll">
-    <div ng-include="'app/pages/dashboard/KL2408/KL2408.html'"></div>
+<!--<div ba-panel ba-panel-title="Modulo KL2408" ba-panel-class="with-scroll">
+    <table class="table table-hover table-condensed">
+        <tr class="black-muted-bg">
+            <th class="left">OUTPUT</th>
+            <th class="left">STATE</th>
+            <th class="left">ACTIONS</th>
+        </tr>
+        <tr ng-repeat="out in data" class="no-top-border">
+            <td>
+                {{ out.name  }}
+            </td>
+            <td>
+                {{ out.state  }}
+            </td>
+            <td>
+                <ba-switcher switcher-style="primary" switcher-value="out.newState"></ba-switcher>
+            </td>
+        </tr>
+    </table>
+
+    <div class="add-row-editable-table">
+        <br>
+        <button class="btn btn-primary" ng-click="clickReadData()">Update data</button>
+        <button class="btn btn-success" ng-click="clickWriteData()">Change data</button>
+    </div>
+</div>-->
+
+<div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-4"
+         ba-panel
+         ba-panel-title="Temperature"
+         ba-panel-class="with-scroll">
+        <div >
+            <h1><span><img src="assets/img/termometro.png"/> {{ temperature }} ºC</span></h1>
+        </div>
+
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-8"
+         ba-panel
+         ba-panel-title="State"
+         ba-panel-class="with-scroll">
+        <div >
+            <div ng-if="temperature>19.9 && temperature<25" class="alert bg-success">
+                <strong>NORMAL</strong>   La temperatura se encuentra dentro del margen establecido
+            </div>
+            <div ng-if="temperature<20" class="alert bg-info">
+                <strong>WARNING!</strong>   La temperatura se encuentra por debajo del margen establecido
+            </div>
+            <div ng-if="temperature>24.9" class="alert bg-danger">
+                <strong>WARNING!</strong>   La temperatura se encuentra por encima del margen establecido
+            </div>
+        </div>
+    </div>
 </div>
 
-<!--Tarjetas en paralelo-->
-<!--<div class="row">
-  <div class="col-lg-6 col-md-12 col-sm-12"
-       ba-panel
-       ba-panel-title="Acquisition Channels"
-       ba-panel-class="medium-panel traffic-panel">
-    <traffic-chart></traffic-chart>
-  </div>
-  <div class="col-lg-6 col-md-12 col-sm-12"
-       ba-panel
-       ba-panel-title="Users by Country"
-       ba-panel-class="medium-panel">
-    <dashboard-map></dashboard-map>
-  </div>
-</div>-->
+<div class="row">
+    <div class="col-md-12"
+         ba-panel
+         ba-panel-title="Temperature Chart"
+         ba-panel-class="with-scroll">
+        <div ng-include="'app/pages/dashboard/lineChart/lineChart.html'"></div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6"
+         ba-panel
+         ba-panel-title="Ventilador"
+         ba-panel-class="with-scroll">
+        <div>
+        </div>
+
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-6"
+         ba-panel
+         ba-panel-title="Resistencia"
+         ba-panel-class="with-scroll">
+        <div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6"
+         ba-panel
+         ba-panel-title="Techo"
+         ba-panel-class="with-scroll">
+        <div>
+        </div>
+
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-6"
+         ba-panel
+         ba-panel-title="Pared"
+         ba-panel-class="with-scroll">
+        <div>
+        </div>
+    </div>
+</div>
+
+
+
+
 

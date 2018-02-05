@@ -10,19 +10,19 @@
 
   /** @ngInject */
   function DashboardPieChartCtrl($scope, $timeout, baConfig, baUtil) {
+    $scope.state = {
+      normal: true,
+      cold: false,
+      hot: false
+    };
+
     var pieColor = baUtil.hexToRGB(baConfig.colors.defaultText, 0.2);
-    $scope.charts = [{
+    $scope.chartTemperature = {
       color: pieColor,
       description: 'Temperature',
       stats: '23.5 ºC',
       icon: 'money',
-    }, {
-      color: pieColor,
-      description: 'Energy',
-      stats: '57.45 %',
-      icon: 'money',
-    },
-    ];
+    };
 
     function getRandomArbitrary(min, max) {
       return Math.random() * (max - min) + min;

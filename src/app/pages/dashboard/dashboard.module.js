@@ -1,5 +1,5 @@
 /**
- * @author v.lugovsky
+ * @author danihbelan
  * created on 16.12.2015
  */
 (function () {
@@ -13,6 +13,7 @@
     $stateProvider
         .state('dashboard', {
           url: '/dashboard',
+          controller: 'dashboardCtrl',
           templateUrl: 'app/pages/dashboard/dashboard.html',
           title: 'Dashboard',
           sidebarMeta: {
