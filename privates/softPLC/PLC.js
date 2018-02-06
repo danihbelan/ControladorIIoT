@@ -53,8 +53,25 @@ var wallVar = {
     rightSensor: '.IN_BOOL_6',
 }
 
-var resistencia = '.OUT_INT_1'
-var ventilador = '.OUT_INT_2'
+var resistencia = {resistencia: '.OUT_INT_1'}
+var ventilador = {ventilador: '.OUT_INT_2'}
+var termometro = {termometro: '.IN_INT_1'}
+
+var arrayVariables = {roof: roofVar, wall: wallVar, res: resistencia, vent: ventilador, term: termometro}
+
+exports.getVariables = function(callback) {
+    callback(util.responseJSON(0, arrayVariables))
+}
+
+exports.setVariables = function(roof, wall, res, vent, callback) {
+    roofVar = roof
+    wallVar = wall
+    resistencia = res
+    ventilador = vent
+
+    callback(util.responseJSON(0))
+}
+
 
 /*************** ROOF ***************/
 

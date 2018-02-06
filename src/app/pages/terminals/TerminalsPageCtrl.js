@@ -3,151 +3,170 @@
  * created on 16.12.2015
  */
 (function () {
-  'use strict';
-  angular.module('BlurAdmin.pages.terminals')
-    .controller('TerminalsPageCtrl', TerminalsPageCtrl);
+    'use strict';
+    angular.module('BlurAdmin.pages.terminals')
+        .controller('TerminalsPageCtrl', TerminalsPageCtrl);
 
     /** @ngInject */
-  function TerminalsPageCtrl($scope, $http,fileReader, $filter, $uibModal) {
+    function TerminalsPageCtrl($scope, $http, fileReader, $filter, $uibModal) {
+        $scope.roofVar;
+        $scope.wallVar;
+        $scope.resistencia;
+        $scope.ventilador;
+        $scope.termometro;
 
-      //TODO Carga los datos con los terminales y leer los estados
-      $scope.terminals = [
-          {
-              id: 0,
-              name: 'EL2004',
-              terminal: 'Term 2',
-              ports: [
-                  {id: 1, name: 'Output 1', var: '.OUT_BOOL_1', state: false, newState: false},
-                  {id: 2, name: 'Output 2', var: '.OUT_BOOL_2', state: false, newState: false},
-                  {id: 3, name: 'Output 3', var: '.OUT_BOOL_3', state: false, newState: false},
-                  {id: 4, name: 'Output 4', var: '.OUT_BOOL_4', state: false, newState: false}
-              ]
-          },
-          {
-              id: 1,
-              name: 'EL2004',
-              terminal: 'Term 3',
-              ports: [
-                  {id: 1, name: 'Output 1', var: '.OUT_BOOL_5', state: false, newState: false},
-                  {id: 2, name: 'Output 2', var: '.OUT_BOOL_6', state: false, newState: false},
-                  {id: 3, name: 'Output 3', var: '.OUT_BOOL_7', state: false, newState: false},
-                  {id: 4, name: 'Output 4', var: '.OUT_BOOL_8', state: false, newState: false}
-              ]
-          },
-          {
-              id: 2,
-              name: 'EL1014',
-              terminal: 'Term 4',
-              ports: [
-                  {id: 1, name: 'Input 1', var: '.IN_BOOL_1', state: false},
-                  {id: 2, name: 'Input 2', var: '.IN_BOOL_2', state: false},
-                  {id: 3, name: 'Input 3', var: '.IN_BOOL_3', state: false},
-                  {id: 4, name: 'Input 4', var: '.IN_BOOL_4', state: false}
-              ]
-          },
-          {
-              id: 3,
-              name: 'EL1014',
-              terminal: 'Term 5',
-              ports: [
-                  {id: 1, name: 'Input 1', var: '.IN_BOOL_5', state: false},
-                  {id: 2, name: 'Input 2', var: '.IN_BOOL_6', state: false},
-                  {id: 3, name: 'Input 3', var: '.IN_BOOL_7', state: false},
-                  {id: 4, name: 'Input 4', var: '.IN_BOOL_8', state: false}
-              ]
-          }
-      ]
+        var arrayVariables;
+
+        getVariables()
+
+        //Los datos se han introducido de forma manual, en el futoro se hara de
+        // forma automatizada a partir de algun archivo de configuración
+        $scope.roofArray = [{name: 'open', type: 'OUT_BOOL'}, {name: 'close', type: 'OUT_BOOL'}, {name: 'openSensor', type: 'IN_BOOL'}, {name: 'closeSensor', type: 'IN_BOOL'}]
+        $scope.wallArray = [{name: 'right', type: 'OUT_BOOL'}, {name: 'left', type: 'OUT_BOOL'}, {name: 'rightSensor', type: 'IN_BOOL'}, {name: 'leftSensor', type: 'IN_BOOL'}]
+        $scope.resistenciaArray = [{name: 'resistencia', type: 'OUT_INT'}]
+        $scope.ventiladorArray = [{name: 'ventilador', type: 'OUT_INT'}]
+        $scope.termometroArray = [{name: 'termometro', type: 'IN_INT'}]
+
+        $scope.OUT_BOOL = ['.OUT_BOOL_1', '.OUT_BOOL_2', '.OUT_BOOL_3', '.OUT_BOOL_4',
+            '.OUT_BOOL_5', '.OUT_BOOL_6', '.OUT_BOOL_7', '.OUT_BOOL_8'];
+
+        $scope.IN_BOOL = ['.IN_BOOL_1', '.IN_BOOL_2', '.IN_BOOL_3', '.ININ_BOOL_4',
+            '.IN_BOOL_5', '.IN_BOOL_6', '.IN_BOOL_7', '.IN_BOOL_8'];
+
+        $scope.OUT_INT = ['.OUT_INT_1', '.OUT_INT_2'];
+
+        $scope.IN_INT = ['.IN_INT_1', '.IN_INT_2'];
 
 
-      /*-----------------------------
-       ----------- Buttons ----------
-       ------------------------------ */
+        $scope.terminals = [
+            {
+                id: 0,
+                terminal: 'Term 2',
+                name: 'EL2004',
+                ports: [
+                    {id: 1, name: 'Output 1', var: '.OUT_BOOL_1', type: 'BIT', in_out: 'Output'},
+                    {id: 2, name: 'Output 2', var: '.OUT_BOOL_2', type: 'BIT', in_out: 'Output'},
+                    {id: 3, name: 'Output 3', var: '.OUT_BOOL_3', type: 'BIT', in_out: 'Output'},
+                    {id: 4, name: 'Output 4', var: '.OUT_BOOL_4', type: 'BIT', in_out: 'Output'}
+                ]
+            },
+            {
+                id: 1,
+                terminal: 'Term 3',
+                name: 'EL2004',
+                ports: [
+                    {id: 1, name: 'Output 1', var: '.OUT_BOOL_5', type: 'BIT', in_out: 'Output'},
+                    {id: 2, name: 'Output 2', var: '.OUT_BOOL_6', type: 'BIT', in_out: 'Output'},
+                    {id: 3, name: 'Output 3', var: '.OUT_BOOL_7', type: 'BIT', in_out: 'Output'},
+                    {id: 4, name: 'Output 4', var: '.OUT_BOOL_8', type: 'BIT', in_out: 'Output'}
+                ]
+            },
+            {
+                id: 2,
+                terminal: 'Term 4',
+                name: 'EL1014',
+                ports: [
+                    {id: 1, name: 'Input 1', var: '.IN_BOOL_1', type: 'BIT', in_out: 'Input'},
+                    {id: 2, name: 'Input 2', var: '.IN_BOOL_2', type: 'BIT', in_out: 'Input'},
+                    {id: 3, name: 'Input 3', var: '.IN_BOOL_3', type: 'BIT', in_out: 'Input'},
+                    {id: 4, name: 'Input 4', var: '.IN_BOOL_4', type: 'BIT', in_out: 'Input'}
+                ]
+            },
+            {
+                id: 3,
+                terminal: 'Term 5',
+                name: 'EL1014',
+                ports: [
+                    {id: 1, name: 'Input 1', var: '.IN_BOOL_5', type: 'BIT', in_out: 'Input'},
+                    {id: 2, name: 'Input 2', var: '.IN_BOOL_6', type: 'BIT', in_out: 'Input'},
+                    {id: 3, name: 'Input 3', var: '.IN_BOOL_7', type: 'BIT', in_out: 'Input'},
+                    {id: 4, name: 'Input 4', var: '.IN_BOOL_8', type: 'BIT', in_out: 'Input'}
+                ]
+            },
+            {
+                id: 4,
+                terminal: 'Term 6',
+                name: 'EL3052',
+                ports: [
+                    {id: 1, name: 'Value 1', var: '.IN_INT_1', type: 'INT', in_out: 'Input'},
+                    {id: 2, name: 'Value 2', var: '.IN_INT_2', type: 'INT', in_out: 'Input'}
+                ]
+            },
+            {
+                id: 5,
+                terminal: 'Term 7',
+                name: 'EL4022',
+                ports: [
+                    {id: 1, name: 'Analog output 1', var: '.OUT_INT_1', type: 'INT', in_out: 'Output'},
+                    {id: 2, name: 'Analog output 2', var: '.OUT_INT_2', type: 'INT', in_out: 'Output'}
+                ]
+            }
+        ]
 
-      /**
-       * Función que responde al botón "Update data"
-       * Se llama a la función "readData()" para cada una de las salidas
-       */
-      $scope.clickReadData = function (idTerm) {
-          /*angular.forEach($scope.data, function (out) {
-              readData(out.id)
-          });*/
-          readData($scope.data[0].id)
-      }
 
-      /**
-       * Función que responde al botón "Change data"
-       * Se llama a la función "writeData()" para cada una de las salidas
-       */
-      $scope.clickWriteData = function (idTerm) {
-          var ids = []
-          var states = []
-          var data = $scope.terminals[idTerm].ports
+        /*-----------------------------
+         ----------- Buttons ----------
+         ------------------------------ */
 
-          angular.forEach(data, function (port) {
-              ids.push(port.id)
-              states.push(port.newState)
-          });
-
-          writeData(ids, states)
-      }
+        /**
+         * Función que responde al botón "Update data"
+         */
+        $scope.clickUpdateData = function (idTerm) {
 
 
-      /*--------------------------------
-       ---------- Updates PLC ----------
-       --------------------------------- */
+        }
 
-      /**
-       * Funcion que hace una petición POST para leer una entrada/salida digital
-       *
-       * @param id
-       */
-      function readData(id) {
-          var json = {
-              id: id
-          }
 
-          var promised = $http.post('/m/u/readData', json)
-          promised.then(function success(response) {
 
-              if (response.data.error == 0) {
-                  //TODO comprobar la respuesta que se haya hecho bien el cambio y actualizar el nuevo estado en la pantalla
-                  console.log(response.data.result)
-              } else {
-                  console.log('Error: ', response.data)
-              }
+        /*--------------------------------
+         ---------- Updates PLC ----------
+         --------------------------------- */
 
-          }, function failed(data) {
+        function getVariables() {
 
-          })
-      }
+            var promised = $http.post('/m/u/getVariables')
+            promised.then(function success(response) {
 
-      /**
-       * Funcion que hace una petición POST para escribir un dato en una salida
-       *
-       * @param ids
-       * @param states
-       */
-      function writeData(ids, states) {
-          var json = {
-              ids: ids,
-              states: states
-          }
+                if (response.data.error == 0) {
+                    arrayVariables = response.data.result
 
-          var promised = $http.post('/m/u/writeData', json)
-          promised.then(function success(response) {
+                    $scope.roofVar = arrayVariables.roof
+                    $scope.wallVar = arrayVariables.wall
+                    $scope.resistencia = arrayVariables.res
+                    $scope.ventilador = arrayVariables.vent
+                    $scope.termometro = arrayVariables.term
 
-              if (response.data.error == 0) {
-                  //TODO comprobar la respuesta que se haya hecho bien el cambio y actualizar el nuevo estado en la pantalla
-                  console.log(response.data.result)
-              } else {
-                  console.log('Error: ', response.data)
-              }
 
-          }, function failed(data) {
+                } else {
+                    console.log('Error: ', response.data)
+                }
 
-          })
-      }
+            }, function failed(data) {
 
-  }
+            })
+        }
+
+        function setVariables() {
+            var json = {
+                roof: $scope.roofVar,
+                wall: $scope.wallVar,
+                res: $scope.resistencia,
+                vent: $scope.ventilador,
+                term: $scope.termometro}
+
+            var promised = $http.post('/m/u/setVariables', json)
+            promised.then(function success(response) {
+
+                if (response.data.error == 0) {
+
+                } else {
+                    console.log('Error: ', response.data)
+                }
+
+            }, function failed(data) {
+
+            })
+        }
+    }
 
 })();

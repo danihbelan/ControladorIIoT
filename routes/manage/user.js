@@ -141,6 +141,18 @@ route.post("/changeResistencia", function (req, res) {
     });
 });
 
+/**
+ * Ruta que obtiene las variables del softPLC
+ */
+route.post("/getVariables", function (req, res) {
+
+    PLC.getVariables(function (result) {
+        res.json(result)
+    });
+});
+
+
+
 
 
 

@@ -1,32 +1,167 @@
-<div ng-repeat="ter in terminals">
-  <div ba-panel ba-panel-title= {{ter.name}} ({{ter.terminal}}) ba-panel-class="with-scroll">
-    <table class="table table-hover table-condensed">
-      <tr class="black-muted-bg">
-        <th class="left">NAME</th>
-        <th class="left">VARIABLE</th>
-        <th class="left">STATE</th>
-        <th class="left">ACTIONS</th>
-      </tr>
-      <tr ng-repeat="port in ter.ports" class="no-top-border">
-        <td>
-          {{ port.name  }}
-        </td>
-        <td>
-          {{ port.var  }}
-        </td>
-        <td>
-          {{ port.state  }}
-        </td>
-        <td>
-          <ba-switcher switcher-style="primary" switcher-value="port.newState"></ba-switcher>
-        </td>
-      </tr>
-    </table>
+<div class="panel panel-primary bootstrap-panel">
+    <div class="panel-heading" align="center"><h2>ASSIGNATION</h2></div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <div ba-panel ba-panel-title="ROOF" ba-panel-class="with-scroll">
+                    <table class="table table-hover table-condensed">
+                        <thead>
+                        <tr class="black-muted-bg">
+                            <th class="table-id">OPERATION</th>
+                            <th>VARIABLE</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="oper in roofArray" class="no-top-border">
+                            <td class="table-id">{{oper.name}}</td>
+                            <td>{{oper.type}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div ba-panel ba-panel-title="WALL" ba-panel-class="with-scroll">
+                    <table class="table table-hover table-condensed">
+                        <thead>
+                        <tr class="black-muted-bg">
+                            <th class="table-id">OPERATION</th>
+                            <th>VARIABLE</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="oper in wallArray" class="no-top-border">
+                            <td class="table-id">{{oper.name}}</td>
+                            <td>{{oper.type}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-12">
+                <div ba-panel ba-panel-title="VENTILADOR" ba-panel-class="with-scroll">
+                    <table class="table table-hover table-condensed">
+                        <thead>
+                        <tr class="black-muted-bg">
+                            <th class="table-id">OPERATION</th>
+                            <th>VARIABLE</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="oper in ventiladorArray" class="no-top-border">
+                            <td class="table-id">{{oper.name}}</td>
+                            <td>{{oper.type}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <div ba-panel ba-panel-title="RESISTENCIA" ba-panel-class="with-scroll">
+                    <table class="table table-hover table-condensed">
+                        <thead>
+                        <tr class="black-muted-bg">
+                            <th class="table-id">OPERATION</th>
+                            <th>VARIABLE</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="oper in resistenciaArray" class="no-top-border">
+                            <td class="table-id">{{oper.name}}</td>
+                            <td>{{oper.type}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <div ba-panel ba-panel-title="TERMOMETRO" ba-panel-class="with-scroll">
+                    <table class="table table-hover table-condensed">
+                        <thead>
+                        <tr class="black-muted-bg">
+                            <th class="table-id">OPERATION</th>
+                            <th>VARIABLE</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="oper in termometroArray" class="no-top-border">
+                            <td class="table-id">{{oper.name}}</td>
+                            <td>{{oper.type}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-    <div class="add-row-editable-table">
-      <br>
-      <button class="btn btn-primary" ng-click="clickReadData(ter.id)">Update data</button>
-      <button class="btn btn-success" ng-click="clickWriteData(ter.id)">Change data</button>
+        </div>
+
+        <div>
+            <br>
+            <button class="btn btn-primary" ng-click="clickUpdateData()">Update data</button>
+        </div>
+
     </div>
-  </div>
+</div>
+
+<div class="panel panel-primary bootstrap-panel">
+    <div class="panel-heading" align="center"><h2>TERMINALS</h2></div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <div ng-repeat="ter in terminals" ng-hide="ter.id%2 != 0">
+                    <div ba-panel ba-panel-title="{{ter.terminal}} ({{ter.name}})" ba-panel-class="with-scroll">
+                        <table class="table table-hover table-condensed">
+                            <thead>
+                            <tr class="black-muted-bg">
+                                <th class="table-id">#</th>
+                                <th>NAME</th>
+                                <th>VARIABLE</th>
+                                <th>TYPE</th>
+                                <th>IN/OUT</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="port in ter.ports" class="no-top-border">
+                                <td class="table-id">{{port.id}}</td>
+                                <td>{{port.name}}</td>
+                                <td>{{port.var}}</td>
+                                <td>{{port.type}}</td>
+                                <td>{{port.in_out}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12">
+                <div ng-repeat="ter in terminals" ng-hide="ter.id%2 == 0">
+                    <div ba-panel ba-panel-title="{{ter.terminal}} ({{ter.name}})" ba-panel-class="with-scroll">
+                        <table class="table table-hover table-condensed">
+                            <thead>
+                            <tr class="black-muted-bg">
+                                <th class="table-id">#</th>
+                                <th>NAME</th>
+                                <th>VARIABLE</th>
+                                <th>TYPE</th>
+                                <th>IN/OUT</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="port in ter.ports" class="no-top-border">
+                                <td class="table-id">{{port.id}}</td>
+                                <td>{{port.name}}</td>
+                                <td>{{port.var}}</td>
+                                <td>{{port.type}}</td>
+                                <td>{{port.in_out}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
