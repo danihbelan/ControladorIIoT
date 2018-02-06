@@ -35,94 +35,226 @@ var requestPLC = function () {
 /***********************************
  --------------- PLC ---------------
  **********************************/
-var outputBool = {
-    1: '.OUT_BOOL_1',
-    2: '.OUT_BOOL_2',
-    3: '.OUT_BOOL_3',
-    4: '.OUT_BOOL_4',
-    5: '.OUT_BOOL_5',
-    6: '.OUT_BOOL_6',
-    7: '.OUT_BOOL_7',
-    8: '.OUT_BOOL_8'
-};
-
-var inputBool = {
-    1: '.IN_BOOL_1',
-    2: '.IN_BOOL_2',
-    3: '.IN_BOOL_3',
-    4: '.IN_BOOL_4',
-    5: '.IN_BOOL_5',
-    6: '.IN_BOOL_6',
-    7: '.IN_BOOL_7',
-    8: '.IN_BOOL_8'
-};
 
 //**Funciones a exportar para llamar desde el gestor de rutas**
 //**Lamada usando reflexiones para acceder a funciones dentro de la funcion loadFuctions**
 
-//Ejemplo de funcion llamada desde el cliente
-exports.startClient = function (callback) {
+var roofVar = {
+    open: '.OUT_BOOL_1',
+    close: '.OUT_BOOL_2',
+    openSensor: '.IN_BOOL_1',
+    closeSensor: '.IN_BOOL_2',
+}
 
-    callback()
-};
+var wallVar = {
+    right: '.OUT_BOOL_5',
+    left: '.OUT_BOOL_6',
+    leftSensor: '.IN_BOOL_5',
+    rightSensor: '.IN_BOOL_6',
+}
 
-/**
- * Función que escribe un boolean en una salida digital
- *
- * @param id        identificador de la salida
- * @param callback  Función callback
- */
-exports.readData = function (id, callback) {
-    var data
-    loadFunctions = function () {
-        console.log('Reading...')
-        var res = function () {
-            console.log('Estado despues de leer: ' + data)
-            var salida = {state: data}
-            callback(util.responseJSON(0, salida))
-        }
+var resistencia = '.OUT_INT_1'
+var ventilador = '.OUT_INT_2'
 
-        var handles = Plc.getHandles({
-            symbols: [
-                '.In_Bool1', '.In_Bool2', '.IN_SINT1', '.IN_INT1', '.IN_DINT', '.IN_STRING',
-                '.IN_TIME', '.IN_REAL', '.TOD_TEST', '.DT_TEST', '.DATE_TEST',
-                'MAIN.fbRamp1.nRamp', 'MAIN.fbRamp2.nRamp'],
-            oc: function() {
-                Plc.readBool({name: output[id], jvar: 'data', oc: res, ocd: 50});
-            }
-        });
-    }
-    requestPLC()
-};
+/*************** ROOF ***************/
 
-/**
- * Función que lee el estado de una salida/entrada digital
- *
- * @param id        identificador de la salida/entrada
- * @param state     valor a escribir
- * @param callback  Función callback
- */
-exports.writeData = function (ids, states, callback) {
-    var data
+exports.openRoof = function (callback) {
+    var sensor
+    var output
     loadFunctions = function () {
         var res = function () {
-            console.log('Estado despues de escibir: ' + data)
-            var salida = {state: data}
-            callback(util.responseJSON(0, salida))
+            callback(util.responseJSON(0))
         }
 
-        var readValue = function () {
-            //Plc.readBool({name: outputBool[id], jvar: 'data', oc: res, ocd: 50});
+        var check = function () {
+            Plc.readBool({name: roofVar.openSensor, jvar: 'sensor'});
+            Plc.readBool({name: roofVar.open, jvar: 'output'});
+
+            if(sensor==false || output==false)
+                Plc.writeBool({name: roofVar.open, val: false, oc: res})
+            else
+                check()
         };
 
-       for(var i=0; i<ids.length; i++){
-            Plc.writeBool({name: outputBool[ids[i]], val: states[i], oc: readValue, ocd: 50})
+        //Plc.writeBool({name: roofVar.close, val: false})
+        //Plc.writeBool({name: roofVar.open, val: true, oc: check})
+        Plc.writeBool({name: roofVar.close, val: false})
+        Plc.writeBool({name: roofVar.open, val: true})
+    }
+    requestPLC()
+};
+
+exports.closeRoof = function (callback) {
+
+    var sensor
+    var output
+    loadFunctions = function () {
+        var res = function () {
+            callback(util.responseJSON(0))
         }
 
+        var check = function () {
+            Plc.readBool({name: roofVar.closeSensor, jvar: 'sensor'});
+            Plc.readBool({name: roofVar.close, jvar: 'output'});
+
+            if(sensor==false || output==false)
+                Plc.writeBool({name: roofVar.close, val: false, oc: res})
+            else
+                check()
+        };
+
+        //Plc.writeBool({name: roofVar.open, val: false})
+        //Plc.writeBool({name: roofVar.close, val: true, oc: check})
+        Plc.writeBool({name: roofVar.open, val: false})
+        Plc.writeBool({name: roofVar.close, val: true})
 
     }
     requestPLC()
 };
+
+exports.stopRoof = function (callback) {
+    var output1
+    var output2
+    loadFunctions = function () {
+        var res = function () {
+            callback(util.responseJSON(0))
+        }
+
+        var check = function () {
+            Plc.readBool({name: roofVar.open, jvar: 'output1'});
+            Plc.readBool({name: roofVar.close, jvar: 'output2'});
+
+            if(output1 || output2){
+                Plc.writeBool({name: roofVar.open, val: false})
+                Plc.writeBool({name: roofVar.close, val: false, oc: check})
+           }else
+                res()
+        };
+
+
+         //Plc.writeBool({name: roofVar.open, val: true})
+         //Plc.writeBool({name: roofVar.close, val: true, oc: check})
+         Plc.writeBool({name: roofVar.open, val: false})
+         Plc.writeBool({name: roofVar.close, val: false})
+
+    }
+    requestPLC()
+};
+
+/*************** WALL ***************/
+
+exports.moveRightWall = function (callback) {
+
+    var sensor
+    var output
+    loadFunctions = function () {
+        var res = function () {
+            callback(util.responseJSON(0))
+        }
+
+        var check = function () {
+            Plc.readBool({name: wallVar.rightSensor, jvar: 'sensor'});
+            Plc.readBool({name: wallVar.right, jvar: 'output'});
+
+            if(sensor==false || output==false)
+                Plc.writeBool({name: wallVar.right, val: false, oc: res})
+            else
+                check()
+        };
+
+        Plc.writeBool({name: wallVar.left, val: false})
+        //Plc.writeBool({name: wallVar.right, val: true, oc: check})
+        Plc.writeBool({name: wallVar.right, val: true})
+    }
+    requestPLC()
+};
+
+exports.moveLeftWall = function (callback) {
+
+    var sensor
+    var output
+    loadFunctions = function () {
+        var res = function () {
+            callback(util.responseJSON(0))
+        }
+
+        var check = function () {
+            Plc.readBool({name: wallVar.leftSensor, jvar: 'sensor'});
+            Plc.readBool({name: wallVar.left, jvar: 'output'});
+
+            if(sensor==false || output==false)
+                Plc.writeBool({name: wallVar.close, val: false, oc: res})
+            else
+                check()
+        };
+
+        Plc.writeBool({name: wallVar.right, val: false})
+        //Plc.writeBool({name: wallVar.left, val: true, oc: check})
+        Plc.writeBool({name: wallVar.left, val: true})
+
+    }
+    requestPLC()
+};
+
+exports.stopWall = function (callback) {
+    var output1
+    var output2
+    loadFunctions = function () {
+        var res = function () {
+            callback(util.responseJSON(0))
+        }
+
+        var check = function () {
+            Plc.readBool({name: wallVar.left, jvar: 'output1'});
+            Plc.readBool({name: wallVar.right, jvar: 'output2'});
+
+            if(output1 || output2){
+                Plc.writeBool({name: wallVar.left, val: false})
+                Plc.writeBool({name: wallVar.right, val: false, oc: check})
+            }else
+                res()
+        };
+
+
+        //Plc.writeBool({name: wallVar.open, val: true})
+        //Plc.writeBool({name: wallVar.close, val: true, oc: check})
+        Plc.writeBool({name: wallVar.left, val: false})
+        Plc.writeBool({name: wallVar.right, val: false})
+
+    }
+    requestPLC()
+};
+
+/*************** VENTILADOR ***************/
+
+exports.changeVentilador = function (value, callback) {
+
+   loadFunctions = function () {
+        var res = function () {
+            callback(util.responseJSON(0))
+        }
+        var data = Math.round(value * 327.67)
+        Plc.writeInt({name: ventilador, val: data, oc: res})
+
+    }
+    requestPLC()
+};
+
+/*************** RESISTENCIA ***************/
+
+exports.changeResistencia = function (value, callback) {
+
+    loadFunctions = function () {
+        var res = function () {
+            callback(util.responseJSON(0))
+        }
+        var data = Math.round(value * 327.67)
+        Plc.writeInt({name: resistencia, val: data, oc: res})
+
+    }
+    requestPLC()
+};
+
 
 
 

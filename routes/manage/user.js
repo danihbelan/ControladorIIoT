@@ -65,6 +65,82 @@ route.post("/writeData", function (req, res) {
     });
 });
 
+/**
+ * Ruta que llama a la funcion encargada de abrir el techo del modulo PLC
+ */
+route.post("/openRoof", function (req, res) {
+    PLC.openRoof(function (result) {
+        res.json(result)
+    });
+});
+
+/**
+ * Ruta que llama a la funcion encargada de cerrar el techo del modulo PLC
+ */
+route.post("/closeRoof", function (req, res) {
+    PLC.closeRoof(function (result) {
+        res.json(result)
+    });
+});
+
+/**
+ * Ruta que llama a la funcion encargada de parar el techo del modulo PLC
+ */
+route.post("/stopRoof", function (req, res) {
+    PLC.stopRoof(function (result) {
+        res.json(result)
+    });
+});
+
+/**
+ * Ruta que llama a la funcion encargada de mover a la derecha el muro del modulo PLC
+ */
+route.post("/moveRight", function (req, res) {
+    PLC.moveRightWall(function (result) {
+        res.json(result)
+    });
+});
+
+/**
+ * Ruta que llama a la funcion encargada de mover a la izquierda el muro del modulo PLC
+ */
+route.post("/moveLeft", function (req, res) {
+    PLC.moveLeftWall(function (result) {
+        res.json(result)
+    });
+});
+
+/**
+ * Ruta que llama a la funcion encargada de parar el muro del modulo PLC
+ */
+route.post("/stopWall", function (req, res) {
+    PLC.stopWall(function (result) {
+        res.json(result)
+    });
+});
+
+/**
+ * Ruta que cambia el valor de entrada del ventilador del modulo PLC
+ */
+route.post("/changeVentilador", function (req, res) {
+    var value = req.body.value
+
+    PLC.changeVentilador(value, function (result) {
+        res.json(result)
+    });
+});
+
+/**
+ * Ruta que cambia el valor de entrada de la resistencia del modulo PLC
+ */
+route.post("/changeResistencia", function (req, res) {
+    var value = req.body.value
+
+    PLC.changeResistencia(value, function (result) {
+        res.json(result)
+    });
+});
+
 
 
 

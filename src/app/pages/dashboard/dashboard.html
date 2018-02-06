@@ -42,17 +42,37 @@
          ba-panel
          ba-panel-title="Ventilador"
          ba-panel-class="with-scroll">
-        <div>
-        </div>
 
+        <h2 align="center"> STATE: <code>{{stateVentilador}}</code></h2>
+
+        <h5>Select Power:</h5>
+        <br>
+        <ion-slider type="single"
+                    grid="true"
+                    min="0"
+                    max="100"
+                    postfix="%"
+                    on-finish="changeVentilador">
+        </ion-slider>
     </div>
 
     <div class="col-xs-6 col-sm-6 col-md-6"
          ba-panel
          ba-panel-title="Resistencia"
          ba-panel-class="with-scroll">
-        <div>
-        </div>
+
+
+        <h2 align="center"> STATE: <code>{{stateResistencia}}</code></h2>
+
+        <h5>Select Power:</h5>
+        <br>
+        <ion-slider type="single"
+                    grid="true"
+                    min="0"
+                    max="100"
+                    postfix="%"
+                    on-finish="changeResistencia">
+        </ion-slider>
     </div>
 </div>
 
@@ -60,31 +80,31 @@
 <div class="row">
     <div class="col-xs-6 col-sm-6 col-md-6"
          ba-panel
-         ba-panel-title="Techo"
+         ba-panel-title="Roof"
          ba-panel-class="with-scroll">
 
-        <h2 align="center"> STATE: <code>CERRADO</code></h2>
+        <h2 align="center"> STATE: <code>{{stateRoof}}</code></h2>
 
         <br>
         <div align="center">
-            <button type="button" class="btn btn-primary btn-lg">Open</button> &nbsp;
-            <button type="button" class="btn btn-primary btn-lg">Close</button> &nbsp;
-            <button type="button" class="btn btn-danger btn-lg">STOP</button> &nbsp;
+            <button type="button" class="btn btn-primary btn-lg" ng-click="clickClose()">Close</button> &nbsp;
+            <button type="button" class="btn btn-primary btn-lg" ng-click="clickOpen()">Open</button> &nbsp;
+            <button type="button" class="btn btn-danger btn-lg" ng-click="clickStopRoof()">STOP</button> &nbsp;
         </div>
     </div>
 
     <div class="col-xs-6 col-sm-6 col-md-6"
          ba-panel
-         ba-panel-title="Pared"
+         ba-panel-title="Wall"
          ba-panel-class="with-scroll">
 
-        <h2 align="center"> STATE: <code>CERRADO</code></h2>
+        <h2 align="center"> STATE: <code>{{stateWall}}</code></h2>
 
         <br>
         <div align="center">
-            <button type="button" class="btn btn-primary btn-lg">Open</button> &nbsp;
-            <button type="button" class="btn btn-primary btn-lg">Move Left</button> &nbsp;
-            <button type="button" class="btn btn-danger btn-lg">Move Right</button> &nbsp;
+            <button type="button" class="btn btn-primary btn-lg" ng-click="clickMoveLeft()">Move Left</button> &nbsp;
+            <button type="button" class="btn btn-primary btn-lg" ng-click="clickMoveRight()">Move Right</button> &nbsp;
+            <button type="button" class="btn btn-danger btn-lg" ng-click="clickStopWall()">STOP</button> &nbsp;
         </div>
 
     </div>
