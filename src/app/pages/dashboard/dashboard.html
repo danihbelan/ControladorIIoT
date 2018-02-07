@@ -1,6 +1,4 @@
-<button type="button" class="btn btn-primary btn-lg" ng-click="click()">Button</button> &nbsp;
-
-<div class="row">
+&nbsp;<div class="row">
     <div class="col-xs-6 col-sm-6 col-md-4"
          ba-panel
          ba-panel-title="Temperature"
@@ -15,17 +13,20 @@
          ba-panel
          ba-panel-title="State"
          ba-panel-class="with-scroll">
+
         <div >
             <div ng-if="temperature>19.9 && temperature<25" class="alert bg-success">
-                <strong>NORMAL</strong>   La temperatura se encuentra dentro del margen establecido
+                    <strong>NORMAL</strong>   La temperatura se encuentra dentro del margen establecido
             </div>
             <div ng-if="temperature<20" class="alert bg-info">
                 <strong>WARNING!</strong>   La temperatura se encuentra por debajo del margen establecido
             </div>
-            <div ng-if="temperature>24.9" class="alert bg-danger">
+            <div ng-if="temperature>24.9" class="alert bg-warning">
                 <strong>WARNING!</strong>   La temperatura se encuentra por encima del margen establecido
             </div>
         </div>
+
+
     </div>
 </div>
 
@@ -111,6 +112,11 @@
 
     </div>
 </div>
+
+<div align="center">
+<button type="button" class="btn btn-danger btn-with-icon btn-lg" ng-click="clickAbort()"><i class="ion-android-warning"></i>ABORT!</button>
+</div>
+<br><br>
 
 
 

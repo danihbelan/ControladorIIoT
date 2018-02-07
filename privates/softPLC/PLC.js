@@ -42,6 +42,8 @@ function requestPLC() {
 //**Funciones a exportar para llamar desde el gestor de rutas**
 //**Lamada usando reflexiones para acceder a funciones dentro de la funcion loadFuctions**
 
+var stateRoof
+
 var roofVar = {
     open: '.OUT_BOOL_1',
     close: '.OUT_BOOL_2',
@@ -63,6 +65,10 @@ var termometro = {termometro: '.IN_INT_1'}
 var arrayVariables = {roof: roofVar, wall: wallVar, res: resistencia, vent: ventilador, term: termometro}
 
 //Variables a leer
+var out_bool_1
+var out_bool_2
+var out_bool_5
+var out_bool_6
 var in_bool_1
 var in_bool_2
 var in_bool_5
@@ -70,11 +76,11 @@ var in_bool_6
 
 var in_int_1
 
-exports.getVariables = function(callback) {
+exports.getVariables = function (callback) {
     callback(util.responseJSON(0, arrayVariables))
 }
 
-exports.setVariables = function(roof, wall, res, vent, callback) {
+exports.setVariables = function (roof, wall, res, vent, callback) {
     roofVar = roof
     wallVar = wall
     resistencia = res
@@ -87,83 +93,68 @@ exports.setVariables = function(roof, wall, res, vent, callback) {
 /*************** ROOF ***************/
 
 exports.openRoof = function (callback) {
-    var sensor
-    var output
     loadFunctions = function () {
         var res = function () {
             callback(util.responseJSON(0))
         }
 
         var check = function () {
-            Plc.readBool({name: roofVar.openSensor, jvar: 'sensor'});
-            Plc.readBool({name: roofVar.open, jvar: 'output'});
-
-            if(sensor==false || output==false)
-                Plc.writeBool({name: roofVar.open, val: false, oc: res})
-            else
-                check()
+            Plc.readBool({name: roofVar.openSensor, jvar: 'in_bool_1',
+                oc: function () {
+                    if (out_bool_1 == false || in_bool_1 == false)
+                        Plc.writeBool({name: roofVar.open, val: false, oc: res})
+                    else
+                        check()
+                }
+            })
         };
 
-        //Plc.writeBool({name: roofVar.close, val: false})
-        //Plc.writeBool({name: roofVar.open, val: true, oc: check})
+        out_bool_1 = true
         Plc.writeBool({name: roofVar.close, val: false})
-        Plc.writeBool({name: roofVar.open, val: true})
+        Plc.writeBool({name: roofVar.open, val: true, oc: check})
     }
     requestPLC()
 };
 
 exports.closeRoof = function (callback) {
-
-    var sensor
-    var output
     loadFunctions = function () {
         var res = function () {
             callback(util.responseJSON(0))
         }
 
         var check = function () {
-            Plc.readBool({name: roofVar.closeSensor, jvar: 'sensor'});
-            Plc.readBool({name: roofVar.close, jvar: 'output'});
-
-            if(sensor==false || output==false)
-                Plc.writeBool({name: roofVar.close, val: false, oc: res})
-            else
-                check()
+            Plc.readBool({name: roofVar.closeSensor, jvar: 'in_bool_2',
+                oc: function () {
+                    if (out_bool_2 == false || in_bool_2 == false)
+                        Plc.writeBool({name: roofVar.close, val: false, oc: res})
+                    else
+                        check()
+                }
+            })
         };
 
-        //Plc.writeBool({name: roofVar.open, val: false})
-        //Plc.writeBool({name: roofVar.close, val: true, oc: check})
+        out_bool_2 = true
         Plc.writeBool({name: roofVar.open, val: false})
-        Plc.writeBool({name: roofVar.close, val: true})
+        Plc.writeBool({name: roofVar.close, val: true, oc: check})
+
 
     }
     requestPLC()
 };
 
 exports.stopRoof = function (callback) {
-    var output1
-    var output2
+
     loadFunctions = function () {
         var res = function () {
             callback(util.responseJSON(0))
         }
 
-        var check = function () {
-            Plc.readBool({name: roofVar.open, jvar: 'output1'});
-            Plc.readBool({name: roofVar.close, jvar: 'output2'});
+        out_bool_1 = false
+        out_bool_2 = false
+        Plc.writeBool({name: roofVar.open, val: false,
+            oc: Plc.writeBool({name: roofVar.close, val: false, oc: res})
+        })
 
-            if(output1 || output2){
-                Plc.writeBool({name: roofVar.open, val: false})
-                Plc.writeBool({name: roofVar.close, val: false, oc: check})
-           }else
-                res()
-        };
-
-
-         //Plc.writeBool({name: roofVar.open, val: true})
-         //Plc.writeBool({name: roofVar.close, val: true, oc: check})
-         Plc.writeBool({name: roofVar.open, val: false})
-         Plc.writeBool({name: roofVar.close, val: false})
 
     }
     requestPLC()
@@ -173,81 +164,67 @@ exports.stopRoof = function (callback) {
 
 exports.moveRightWall = function (callback) {
 
-    var sensor
-    var output
     loadFunctions = function () {
         var res = function () {
             callback(util.responseJSON(0))
         }
 
         var check = function () {
-            Plc.readBool({name: wallVar.rightSensor, jvar: 'sensor'});
-            Plc.readBool({name: wallVar.right, jvar: 'output'});
-
-            if(sensor==false || output==false)
-                Plc.writeBool({name: wallVar.right, val: false, oc: res})
-            else
-                check()
+            Plc.readBool({name: wallVar.rightSensor, jvar: 'in_bool_6',
+                oc: function () {
+                    if (out_bool_5 == false || in_bool_6 == false)
+                        Plc.writeBool({name: wallVar.right, val: false, oc: res})
+                    else
+                        check()
+                }
+            })
         };
 
+        out_bool_5 = true
         Plc.writeBool({name: wallVar.left, val: false})
-        //Plc.writeBool({name: wallVar.right, val: true, oc: check})
-        Plc.writeBool({name: wallVar.right, val: true})
+        Plc.writeBool({name: wallVar.right, val: true, oc: check})
     }
     requestPLC()
 };
 
 exports.moveLeftWall = function (callback) {
 
-    var sensor
-    var output
     loadFunctions = function () {
         var res = function () {
             callback(util.responseJSON(0))
         }
 
         var check = function () {
-            Plc.readBool({name: wallVar.leftSensor, jvar: 'sensor'});
-            Plc.readBool({name: wallVar.left, jvar: 'output'});
-
-            if(sensor==false || output==false)
-                Plc.writeBool({name: wallVar.close, val: false, oc: res})
-            else
-                check()
+            Plc.readBool({name: wallVar.leftSensor, jvar: 'in_bool_5',
+                oc: function () {
+                    if (out_bool_6 == false || in_bool_5 == false)
+                        Plc.writeBool({name: wallVar.left, val: false, oc: res})
+                    else
+                        check()
+                }
+            })
         };
 
+        out_bool_6 = true
         Plc.writeBool({name: wallVar.right, val: false})
-        //Plc.writeBool({name: wallVar.left, val: true, oc: check})
-        Plc.writeBool({name: wallVar.left, val: true})
-
+        Plc.writeBool({name: wallVar.left, val: true, oc: check})
     }
     requestPLC()
 };
 
 exports.stopWall = function (callback) {
-    var output1
-    var output2
+
     loadFunctions = function () {
         var res = function () {
             callback(util.responseJSON(0))
         }
 
-        var check = function () {
-            Plc.readBool({name: wallVar.left, jvar: 'output1'});
-            Plc.readBool({name: wallVar.right, jvar: 'output2'});
+        out_bool_5 = false
+        out_bool_6 = false
+        Plc.writeBool({name: wallVar.right, val: false,
+            oc: Plc.writeBool({name: wallVar.left, val: false, oc: res})
+        })
 
-            if(output1 || output2){
-                Plc.writeBool({name: wallVar.left, val: false})
-                Plc.writeBool({name: wallVar.right, val: false, oc: check})
-            }else
-                res()
-        };
-
-
-        //Plc.writeBool({name: wallVar.open, val: true})
-        //Plc.writeBool({name: wallVar.close, val: true, oc: check})
-        Plc.writeBool({name: wallVar.left, val: false})
-        Plc.writeBool({name: wallVar.right, val: false})
 
     }
     requestPLC()
@@ -257,7 +234,7 @@ exports.stopWall = function (callback) {
 
 exports.changeVentilador = function (value, callback) {
 
-   loadFunctions = function () {
+    loadFunctions = function () {
         var res = function () {
             callback(util.responseJSON(0))
         }
@@ -284,29 +261,37 @@ exports.changeResistencia = function (value, callback) {
 };
 
 
-exports.read = function (callback) {
+exports.readTemperature = function (callback) {
 
     loadFunctions = function () {
         var res = function () {
-            var response = temperatureVar
+            //Convertimos el valor a grados centigrados
+            var response = in_int_1 * 0.0021176
+            console.log('Temp value: ' + response)
             callback(util.responseJSON(0, response))
         }
 
-        Plc.readInt({
-            name: ".IN_INT_1",
-            jvar: "in_int_1",
-            oc: function(){
-                console.log("Valor: " +in_int_1)
-            }
-        })
+        Plc.readInt({name: termometro.termometro, jvar: 'in_int_1', oc: res})
 
     }
     requestPLC()
 };
 
 //Funcióne a llamar desde la librería TAME para guarda la variable devuelta
-exports.setVar = function(data) {
-    switch (data.varName){
+exports.setVar = function (data) {
+    switch (data.varName) {
+        case "out_bool_1":
+            out_bool_1 = data.varValue
+            break;
+        case "out_bool_2":
+            out_bool_2 = data.varValue
+            break;
+        case "out_bool_5":
+            in_bool_5 = data.varValue
+            break;
+        case "out_bool_6":
+            out_bool_6 = data.varValue
+            break;
         case "in_bool_1":
             in_bool_1 = data.varValue
             break;

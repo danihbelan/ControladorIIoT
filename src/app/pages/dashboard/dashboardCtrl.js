@@ -12,10 +12,10 @@
     function dashboardCtrl($scope, $http, $timeout, baConfig, baUtil, $element, layoutPaths) {
         //TODO crear función que lea en bucle todos los valores y estados
 
-        $scope.stateRoof = 'DESCONOCIDO'
-        $scope.stateWall = 'DESCONOCIDO'
-        $scope.stateVentilador = 'PARADO'
-        $scope.stateResistencia = 'APAGADA'
+        $scope.stateRoof = 'PARADO'
+        $scope.stateWall = 'PARADO'
+        $scope.stateVentilador = 'APAGADO'
+        $scope.stateResistencia = 'APAGADO'
 
         $scope.temperature = 24.5
 
@@ -25,9 +25,9 @@
         /*-----------------------------
          ----------- Buttons ----------
          ------------------------------ */
-        $scope.click = function (data) {
+        $scope.clickAbort = function (data) {
 
-            var promised = $http.post('/m/u/read')
+            var promised = $http.post('/m/u/readTemperature')
             promised.then(function success(response) {
 
                 if (response.data.error == 0) {
@@ -43,12 +43,18 @@
 
         $scope.changeVentilador = function (data) {
             var json = {value: data.from}
+            if(data.from == 0)
+                $scope.stateVentilador = 'APAGADO'
+            else if(data.from == 100)
+                $scope.stateVentilador = 'MAXIMA POTENCIA'
+            else
+                $scope.stateVentilador = 'POTENCIA AL ' +data.from +' %'
+
             var promised = $http.post('/m/u/changeVentilador', json)
             promised.then(function success(response) {
 
                 if (response.data.error == 0) {
-                    //TODO comprobar la respuesta que se haya hecho bien el cambio y actualizar el nuevo estado en la pantalla
-                    console.log(response.data.result)
+                    //TODO poner aqui estado
                 } else {
                     console.log('Error: ', response.data)
                 }
@@ -60,12 +66,18 @@
 
         $scope.changeResistencia = function (data) {
             var json = {value: data.from}
+            if(data.from == 0)
+                $scope.stateResistencia = 'APAGADO'
+            else if(data.from == 100)
+                $scope.stateResistencia = 'MAXIMA POTENCIA'
+            else
+                $scope.stateResistencia = 'POTENCIA AL ' +data.from +' %'
+
             var promised = $http.post('/m/u/changeResistencia', json)
             promised.then(function success(response) {
 
                 if (response.data.error == 0) {
-                    //TODO comprobar la respuesta que se haya hecho bien el cambio y actualizar el nuevo estado en la pantalla
-                    console.log(response.data.result)
+                    //TODO poner aqui estado
                 } else {
                     console.log('Error: ', response.data)
                 }
@@ -82,8 +94,7 @@
             promised.then(function success(response) {
 
                 if (response.data.error == 0) {
-                    //TODO comprobar la respuesta que se haya hecho bien el cambio y actualizar el nuevo estado en la pantalla
-                    console.log(response.data.result)
+                    $scope.stateRoof = 'PARADO'
                 } else {
                     console.log('Error: ', response.data)
                 }
@@ -100,8 +111,7 @@
             promised.then(function success(response) {
 
                 if (response.data.error == 0) {
-                    //TODO comprobar la respuesta que se haya hecho bien el cambio y actualizar el nuevo estado en la pantalla
-                    console.log(response.data.result)
+                    $scope.stateRoof = 'PARADO'
                 } else {
                     console.log('Error: ', response.data)
                 }
@@ -118,8 +128,7 @@
             promised.then(function success(response) {
 
                 if (response.data.error == 0) {
-                    //TODO comprobar la respuesta que se haya hecho bien el cambio y actualizar el nuevo estado en la pantalla
-
+                    $scope.stateRoof = 'PARADO'
                 } else {
                     console.log('Error: ', response.data)
                 }
@@ -136,8 +145,7 @@
             promised.then(function success(response) {
 
                 if (response.data.error == 0) {
-                    //TODO comprobar la respuesta que se haya hecho bien el cambio y actualizar el nuevo estado en la pantalla
-                    console.log(response.data.result)
+                    $scope.stateWall = 'PARADO'
                 } else {
                     console.log('Error: ', response.data)
                 }
@@ -154,8 +162,7 @@
             promised.then(function success(response) {
 
                 if (response.data.error == 0) {
-                    //TODO comprobar la respuesta que se haya hecho bien el cambio y actualizar el nuevo estado en la pantalla
-                    console.log(response.data.result)
+                    $scope.stateWall = 'PARADO'
                 } else {
                     console.log('Error: ', response.data)
                 }
@@ -172,7 +179,7 @@
             promised.then(function success(response) {
 
                 if (response.data.error == 0) {
-                    //TODO comprobar la respuesta que se haya hecho bien el cambio y actualizar el nuevo estado en la pantalla
+                    $scope.stateWall = 'PARADO'
 
                 } else {
                     console.log('Error: ', response.data)

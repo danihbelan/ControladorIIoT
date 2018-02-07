@@ -154,9 +154,9 @@ route.post("/getVariables", function (req, res) {
 /**
  * Ruta que obtiene las variables del softPLC
  */
-route.post("/read", function (req, res) {
+route.post("/readTemperature", function (req, res) {
 
-    PLC.read(function (result) {
+    PLC.readTemperature(function (result) {
         res.json(result)
     });
 });
