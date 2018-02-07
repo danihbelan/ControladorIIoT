@@ -8,30 +8,32 @@
   function authSignInCtrl($http, $scope, $state) {
 
     $scope.initController = function () {
-      console.log('se inicia')
+      console.log('Se inicia el controlador')
     }
 
     $scope.clickLogin = function () {
-      console.log('login')
+      console.log('click login')
       var datosUser = {
         'mail': $scope.mail,
         'password': $scope.password
       }
-      console.log(datosUser)
 
-      /*$http.post("//localhost:4000/api/login", datosUser)
-          .then(function (response) {
-                  if (response.data.error === 0) {
-                      localStorage.setObject('dataUser', response.data.result);
-                      $state.go('main.dashboard');
-                  }
-                  else {
-                      console.log("Error: " + response.data.error);
-                  }
-              }, function (response) {
-                  console.log("Error: " + response.data.error);
-              }
-          )*/
+
+        var promised = $http.post('/loginForm', datosUser)
+        promised.then(function success(response) {
+
+            if (response.data.error == 0) {
+                console.log('Correcto')
+                //Redireccion a /admin
+
+            } else {
+                console.log('Error: ', response.data)
+            }
+
+        }, function failed(data) {
+
+        })
+
     }
 
   }

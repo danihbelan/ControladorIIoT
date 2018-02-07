@@ -15,28 +15,6 @@ module.exports = function (app) {
 		}
 	};
 
-	if (config.sessionDB) {
-		var RedisStore = require('connect-redis')(session);
-		var redis = require("redis").createClient();
-		var store;
-
-		store = new RedisStore({
-			host: config.dbSession.host,
-			port: config.dbSession.port,
-			client: redis
-		});
-
-		store.on('disconnect', function () {
-			console.log('Redis disconnect');
-		});
-
-		store.on('connect', function () {
-			console.log('Redis conected');
-		});
-
-		optionsSession.store = store;
-	}
-
 	// Iniciamos la sesion
 	app.use(session(optionsSession));
 }

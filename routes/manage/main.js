@@ -1,7 +1,7 @@
 var express = require('express');
 var route = express.Router();
-
-
+var serviceToken = require('../../privates/utils/serviceToken');
+var query = require('../../privates/database/subsistems/general')
 /**
  * Constructor de modulo
  *
@@ -29,3 +29,25 @@ route.get('/admin', function(req, res, next) {
   console.log(req.path);
 });
 
+
+route.post('/loginForm', function(req, res, next) {
+    var mail = req.body.mail;
+    var password = req.body.password;
+
+    var datosLogin = {
+        mail : mail,
+        password : password
+    }
+
+    query.login(datosLogin,function(err,resultados){
+        if(err){
+            return codigos.responseFail(res, err);
+        }
+        if(resultados.length !== 1)
+            return codigos.responseFail(res, 500)
+        else {
+            var token = {token:serviceToken.createToken(resultados[0])}
+            res.status(200).json(token)
+        }
+    })
+});
