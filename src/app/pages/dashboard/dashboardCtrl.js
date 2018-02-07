@@ -25,6 +25,21 @@
         /*-----------------------------
          ----------- Buttons ----------
          ------------------------------ */
+        $scope.click = function (data) {
+
+            var promised = $http.post('/m/u/read')
+            promised.then(function success(response) {
+
+                if (response.data.error == 0) {
+                    console.log(response.data.result)
+                } else {
+                    console.log('Error: ', response.data)
+                }
+
+            }, function failed(data) {
+
+            })
+        }
 
         $scope.changeVentilador = function (data) {
             var json = {value: data.from}

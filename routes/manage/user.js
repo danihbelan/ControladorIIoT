@@ -151,6 +151,16 @@ route.post("/getVariables", function (req, res) {
     });
 });
 
+/**
+ * Ruta que obtiene las variables del softPLC
+ */
+route.post("/read", function (req, res) {
+
+    PLC.read(function (result) {
+        res.json(result)
+    });
+});
+
 
 
 

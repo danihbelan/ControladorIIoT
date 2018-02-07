@@ -21,12 +21,6 @@
 
         //Los datos se han introducido de forma manual, en el futoro se hara de
         // forma automatizada a partir de algun archivo de configuración
-        $scope.roofArray = [{name: 'open', type: 'OUT_BOOL'}, {name: 'close', type: 'OUT_BOOL'}, {name: 'openSensor', type: 'IN_BOOL'}, {name: 'closeSensor', type: 'IN_BOOL'}]
-        $scope.wallArray = [{name: 'right', type: 'OUT_BOOL'}, {name: 'left', type: 'OUT_BOOL'}, {name: 'rightSensor', type: 'IN_BOOL'}, {name: 'leftSensor', type: 'IN_BOOL'}]
-        $scope.resistenciaArray = [{name: 'resistencia', type: 'OUT_INT'}]
-        $scope.ventiladorArray = [{name: 'ventilador', type: 'OUT_INT'}]
-        $scope.termometroArray = [{name: 'termometro', type: 'IN_INT'}]
-
         $scope.OUT_BOOL = ['.OUT_BOOL_1', '.OUT_BOOL_2', '.OUT_BOOL_3', '.OUT_BOOL_4',
             '.OUT_BOOL_5', '.OUT_BOOL_6', '.OUT_BOOL_7', '.OUT_BOOL_8'];
 

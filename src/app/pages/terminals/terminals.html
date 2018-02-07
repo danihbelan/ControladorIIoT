@@ -4,22 +4,17 @@
         <div class="row">
             <div class="col-lg-6 col-md-12">
                 <div ba-panel ba-panel-title="ROOF" ba-panel-class="with-scroll">
-                    <table class="table table-hover table-condensed">
-                        <thead>
-                        <tr class="black-muted-bg">
-                            <th class="table-id">OPERATION</th>
-                            <th>VARIABLE</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="oper in roofArray" class="no-top-border">
-                            <td class="table-id">{{oper.name}}</td>
-                            <td>{{oper.type}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Open</label>
+                        <md-select ng-model="roofVar.open">
+                            <md-option ng-repeat="var in OUT_BOOL" value="{{roofVar.open}}">
+                                {{roofVar.open}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
                 </div>
             </div>
+
             <div class="col-lg-6 col-md-12">
                 <div ba-panel ba-panel-title="WALL" ba-panel-class="with-scroll">
                     <table class="table table-hover table-condensed">

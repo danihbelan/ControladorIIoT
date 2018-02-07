@@ -15,9 +15,12 @@
 const Window = require('window');
 const window = new Window();
 
+
 (function () {
 
     "use strict";
+
+    var softPLC = require('./PLC')
 
     /**
      * This is the global TAME object. Used as a namespace to store values and functions.
@@ -401,6 +404,7 @@ const window = new Window();
                 }
                 obj[arr[i]] = data;
             }
+
             return obj[arr[i]];
 
         }
@@ -478,7 +482,7 @@ const window = new Window();
                 log('TAME library error: IndexGroup is not a number, check address or name definition of the variable/request!');
                 log(req);
             }
-            log(req);
+
             return indexGroup;
         }
 
@@ -997,6 +1001,7 @@ const window = new Window();
                     }
                 }
             };
+
             return adsReq;
         }
 
@@ -2283,6 +2288,8 @@ const window = new Window();
                     //Parse the name of the JavaScript variable and write the data to it
                     if (type !== 'EndStruct') {
                         parseVarName(item.jvar, data, adsReq.reqDescr.dataObj, item.prefix, item.suffix);
+                        //[ADAPTACION Devuielve el valor al softPLC]
+                        softPLC.setVar({varName: item.jvar, varValue: data})
                     }
 
                     //Set the next address
@@ -2705,6 +2712,7 @@ const window = new Window();
 
             switch (type) {
                 case 'STRING':
+
                     //Change the read length if a value is given.
                     if (isValidStringLen(args.strlen)) {
                         type += '.' + args.strlen;
@@ -3424,6 +3432,7 @@ const window = new Window();
                 indexOffset: getIndexOffset(reqDescr),
                 reqDescr: reqDescr
             };
+
             createRequest(adsReq).send();
         };
 

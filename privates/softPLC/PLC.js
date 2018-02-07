@@ -5,6 +5,7 @@
 "use strict";
 var util = require('./util')
 
+
 /***********************************
  ----------- WebService ------------
  **********************************/
@@ -12,13 +13,15 @@ var Plc;
 var TAME = require('./tame.js')
 var loadFunctions
 
+
 /**
  * Función encargada de realizar las request al PLC
  *
  * @param handles
  * @returns {Object|any|*}
  */
-var requestPLC = function () {
+//var requestPLC = function (handles) {
+function requestPLC() {
 
     Plc = TAME.WebServiceClient.createClient({
         serviceUrl: 'http://localhost/TcAdsWebService/TcAdsWebService.dll',
@@ -58,6 +61,14 @@ var ventilador = {ventilador: '.OUT_INT_2'}
 var termometro = {termometro: '.IN_INT_1'}
 
 var arrayVariables = {roof: roofVar, wall: wallVar, res: resistencia, vent: ventilador, term: termometro}
+
+//Variables a leer
+var in_bool_1
+var in_bool_2
+var in_bool_5
+var in_bool_6
+
+var in_int_1
 
 exports.getVariables = function(callback) {
     callback(util.responseJSON(0, arrayVariables))
@@ -273,6 +284,47 @@ exports.changeResistencia = function (value, callback) {
 };
 
 
+exports.read = function (callback) {
+
+    loadFunctions = function () {
+        var res = function () {
+            var response = temperatureVar
+            callback(util.responseJSON(0, response))
+        }
+
+        Plc.readInt({
+            name: ".IN_INT_1",
+            jvar: "in_int_1",
+            oc: function(){
+                console.log("Valor: " +in_int_1)
+            }
+        })
+
+    }
+    requestPLC()
+};
+
+//Funcióne a llamar desde la librería TAME para guarda la variable devuelta
+exports.setVar = function(data) {
+    switch (data.varName){
+        case "in_bool_1":
+            in_bool_1 = data.varValue
+            break;
+        case "in_bool_2":
+            in_bool_2 = data.varValue
+            break;
+        case "in_bool_5":
+            in_bool_5 = data.varValue
+            break;
+        case "in_bool_6":
+            in_bool_6 = data.varValue
+            break;
+        case "in_int_1":
+            in_int_1 = data.varValue
+            break;
+
+    }
+}
 
 
 
