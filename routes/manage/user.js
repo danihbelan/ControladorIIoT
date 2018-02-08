@@ -8,6 +8,7 @@ var express = require('express');
 var route = express.Router();
 var util = require("../../privates/database/util");
 var PLC = require('../../privates/softPLC/PLC')
+var query = require('../../privates/database/subsistems/general')
 
 /**
  * Constructor de modulo
@@ -144,19 +145,29 @@ route.post("/changeResistencia", function (req, res) {
 /**
  * Ruta que obtiene las variables del softPLC
  */
-route.post("/getVariables", function (req, res) {
+route.post("/readTemperature", function (req, res) {
 
-    PLC.getVariables(function (result) {
+    PLC.readTemperature(function (result) {
         res.json(result)
     });
 });
 
 /**
+ * Ruta que obtiene el historico de las temperaturas
+ */
+route.post("/getTemperatures", function (req, res) {
+
+    query.getTemperatures(function (result) {
+        res.json(result)
+    })
+});
+
+/**
  * Ruta que obtiene las variables del softPLC
  */
-route.post("/readTemperature", function (req, res) {
+route.post("/getVariables", function (req, res) {
 
-    PLC.readTemperature(function (result) {
+    PLC.getVariables(function (result) {
         res.json(result)
     });
 });

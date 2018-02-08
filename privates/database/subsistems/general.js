@@ -39,3 +39,28 @@ exports.login = function(datosLogin, callback){
   })
 }
 
+exports.setTemperature = function(datos, callback){
+    var query = "INSERT INTO temperatures(temperature, time) VALUES (?,?)";
+
+    mysql.query(query, datos, function (err, user){
+        if(err){
+            console.error(err);
+            return callback(mysql.utils.responseJSON(100));
+        }else{
+            callback(mysql.utils.responseJSON(0));
+        }
+    })
+}
+
+exports.getTemperatures = function(callback){
+    var query = "SELECT * FROM temperatures";
+
+    mysql.query(query, function (err, rows){
+        if(err){
+            console.error(err);
+            return callback(mysql.utils.responseJSON(100));
+        }else{
+            callback(mysql.utils.responseJSON(0, rows));
+        }
+    })
+}

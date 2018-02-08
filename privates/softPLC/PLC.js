@@ -4,6 +4,8 @@
 
 "use strict";
 var util = require('./util')
+var lodash = require('lodash')
+var query = require('../../privates/database/subsistems/general')
 
 
 /***********************************
@@ -260,24 +262,55 @@ exports.changeResistencia = function (value, callback) {
     requestPLC()
 };
 
+/*************** TERMOMETRO ***************/
+var stateTermometro = true
 
-exports.readTemperature = function (callback) {
+var readTemperature = function () {
 
     loadFunctions = function () {
-        var res = function () {
+
+        var saveTemperature = function () {
             //Convertimos el valor a grados centigrados
-            var response = in_int_1 * 0.0021176
-            console.log('Temp value: ' + response)
-            callback(util.responseJSON(0, response))
+            var temperature = in_int_1 * 0.0021176
+            temperature = lodash.round(temperature, 2)
+            //Obtenemos la marca de tiempo
+            var timedate = new Date().toMysqlFormat();
+
+            //console.log('Temp value: ' + temperature, 'Time: '+ timedate)
+            //Almacenamos la temperatura en la base de datos
+            query.setTemperature([temperature, timedate], function (result) {})
+
+            //Volvemos a medir la temperatura
+            setTimeout(function () {
+                if(stateTermometro)
+                    Plc.readInt({name: termometro.termometro, jvar: 'in_int_1', oc: saveTemperature})
+            },5000)
         }
 
-        Plc.readInt({name: termometro.termometro, jvar: 'in_int_1', oc: res})
-
+        var stateTermometro = true
+        Plc.readInt({name: termometro.termometro, jvar: 'in_int_1', oc: saveTemperature})
     }
     requestPLC()
 };
 
-//Funcióne a llamar desde la librería TAME para guarda la variable devuelta
+//Inicializamos al cargar el servidor que comience a leer la temperatura
+readTemperature()
+
+exports.setStateTermometro = function (state, callback) {
+
+    if (state==true && stateTermometro==false){
+        stateTermometro = true;
+        readTemperature()
+    }else if(state==false)
+        stateTermometro == false
+
+    callback(util.responseJSON(0))
+};
+
+
+/////////////////////////////////////////////////
+
+//Función a llamar desde la librería TAME para guarda la variable devuelta
 exports.setVar = function (data) {
     switch (data.varName) {
         case "out_bool_1":
@@ -310,6 +343,20 @@ exports.setVar = function (data) {
 
     }
 }
+
+
+//Función que convierte la fecha tipo Date a DATETIME
+function twoDigits(d){
+    if(0 <= d && d < 10) return "0" + d.toString();
+    if(-10 < d && d < 0) return "-0" + (-1*d).toString();
+    return d.toString();
+}
+
+Date.prototype.toMysqlFormat = function () {
+    return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) +
+    " " + twoDigits(1 + this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds())
+}
+
 
 
 

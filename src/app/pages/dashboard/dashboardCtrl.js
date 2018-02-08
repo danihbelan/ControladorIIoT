@@ -17,8 +17,41 @@
         $scope.stateVentilador = 'APAGADO'
         $scope.stateResistencia = 'APAGADO'
 
-        $scope.temperature = 24.5
+        $scope.temperature = 21.0
+        var temperatures = []
 
+        /*-----------------------------
+         ----------- Updates ----------
+         ------------------------------ */
+        var initElements = function () {
+            //Llamos a la funcion que se encarga de obtener los datos de la base de datos
+           getTemperatures()
+        }
+
+        var getTemperatures = function (){
+            var promised = $http.post('/m/u/getTemperatures')
+            promised.then(function success(response) {
+
+                if (response.data.error == 0) {
+                    //Actualizar valores de temperatura
+                    temperatures = response.data.result
+                    $scope.temperature = temperatures[temperatures.length -1].temperature
+                } else {
+                    console.log('Error: ', response.data)
+                }
+
+            }, function failed(data) {
+
+            })
+
+            //Volvemos a llamar a la funcion cada un segundo
+            setTimeout(function () {
+                getTemperatures()
+            },5000)
+        }
+
+        //Llamamos a la función que inicia los datos
+        initElements()
 
 
 
@@ -32,6 +65,8 @@
 
                 if (response.data.error == 0) {
                     console.log(response.data.result)
+                    $scope.temperature = response.data.result
+
                 } else {
                     console.log('Error: ', response.data)
                 }
@@ -181,65 +216,6 @@
                 if (response.data.error == 0) {
                     $scope.stateWall = 'PARADO'
 
-                } else {
-                    console.log('Error: ', response.data)
-                }
-
-            }, function failed(data) {
-
-            })
-        }
-
-
-
-
-        /*--------------------------------
-         ---------- Updates PLC ----------
-         --------------------------------- */
-
-        /**
-         * Funcion que hace una petición POST para leer una entrada/salida digital
-         *
-         * @param id
-         */
-        function readData(id) {
-            var json = {
-                id: id
-            }
-
-            var promised = $http.post('/m/u/readData', json)
-            promised.then(function success(response) {
-
-                if (response.data.error == 0) {
-                    //TODO comprobar la respuesta que se haya hecho bien el cambio y actualizar el nuevo estado en la pantalla
-                    console.log(response.data.result)
-                } else {
-                    console.log('Error: ', response.data)
-                }
-
-            }, function failed(data) {
-
-            })
-        }
-
-        /**
-         * Funcion que hace una petición POST para escribir un dato en una salida
-         *
-         * @param id
-         * @param state
-         */
-        function writeData(id, state) {
-            var json = {
-                id: id,
-                state: state
-            }
-
-            var promised = $http.post('/m/u/writeData', json)
-            promised.then(function success(response) {
-
-                if (response.data.error == 0) {
-                    //TODO comprobar la respuesta que se haya hecho bien el cambio y actualizar el nuevo estado en la pantalla
-                    console.log(response.data.result)
                 } else {
                     console.log('Error: ', response.data)
                 }
