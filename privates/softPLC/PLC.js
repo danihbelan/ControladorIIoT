@@ -319,8 +319,7 @@ var readTemperature = function () {
 };
 
 //Inicializamos al cargar el servidor que comience a leer la temperatura
-//TODO decomentar
-// /readTemperature()
+readTemperature()
 
 exports.setStateTermometro = function (state, callback) {
 
