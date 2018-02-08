@@ -40,11 +40,10 @@ route.post('/loginForm', function(req, res, next) {
     }
 
     query.login(datosLogin,function(err,resultados){
+        console.log(resultados[0])
         if(err){
-            return codigos.responseFail(res, err);
+            console.log(err);
         }
-        if(resultados.length !== 1)
-            return codigos.responseFail(res, 500)
         else {
             var token = {token:serviceToken.createToken(resultados[0])}
             res.status(200).json(token)

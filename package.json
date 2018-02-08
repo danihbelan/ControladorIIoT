@@ -6,6 +6,7 @@
     "start": "nodemon ./bin/www --ignore 'views' --ignore 'src/*' --ignore 'lib/*.js' --ignore 'public'"
   },
   "dependencies": {
+    "angular-ui-router-redirect": "0.0.3",
     "body-parser": "~1.18.2",
     "bower": "^1.6.5",
     "compression": "^1.6.2",

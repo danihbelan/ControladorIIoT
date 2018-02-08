@@ -16,7 +16,8 @@
                     order: 800
                 },
                 authenticate: false
-            });
+            })
+
     }
 
 })();
