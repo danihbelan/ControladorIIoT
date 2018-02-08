@@ -18,6 +18,9 @@
         $scope.stateResistencia = 'APAGADO'
 
         $scope.temperature = 21.0
+        $scope.time
+        $scope.date
+        $scope.timeDate
         var temperatures = []
 
         /*-----------------------------
@@ -25,7 +28,21 @@
          ------------------------------ */
         var initElements = function () {
             //Llamos a la funcion que se encarga de obtener los datos de la base de datos
-           getTemperatures()
+            getDateTime()
+            getTemperatures()
+        }
+
+        var getDateTime = function(){
+            var d = new Date()
+
+            $scope.time = d.getHours() + ":" + (d.getMinutes()<10?'0':'') + d.getMinutes()
+            $scope.date = d.getDate() + "/" + d.getMonth()+1 + "/" + d.getFullYear()
+            $scope.timeDate = $scope.time + '  ' +'\n' + $scope.date
+
+            //Volvemos a llamar a la funcion cada 999 milisegundos
+            setTimeout(function () {
+                getDateTime()
+            },999)
         }
 
         var getTemperatures = function (){
@@ -44,7 +61,7 @@
 
             })
 
-            //Volvemos a llamar a la funcion cada un segundo
+            //Volvemos a llamar a la funcion cada 5 segundo
             setTimeout(function () {
                 getTemperatures()
             },5000)
@@ -60,13 +77,14 @@
          ------------------------------ */
         $scope.clickAbort = function (data) {
 
-            var promised = $http.post('/m/u/readTemperature')
+            var promised = $http.post('/m/u/abort')
             promised.then(function success(response) {
 
                 if (response.data.error == 0) {
-                    console.log(response.data.result)
-                    $scope.temperature = response.data.result
-
+                    $scope.stateRoof = 'PARADO'
+                    $scope.stateWall = 'PARADO'
+                    $scope.stateVentilador = 'APAGADO'
+                    $scope.stateResistencia = 'APAGADO'
                 } else {
                     console.log('Error: ', response.data)
                 }
@@ -74,6 +92,7 @@
             }, function failed(data) {
 
             })
+
         }
 
         $scope.changeVentilador = function (data) {

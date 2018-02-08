@@ -40,7 +40,7 @@ route.post('/loginForm', function(req, res, next) {
     }
 
     query.login(datosLogin,function(err,resultados){
-        console.log(resultados[0])
+
         if(err){
             console.log(err);
         }

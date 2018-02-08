@@ -241,7 +241,7 @@ exports.changeVentilador = function (value, callback) {
             callback(util.responseJSON(0))
         }
         var data = Math.round(value * 327.67)
-        Plc.writeInt({name: ventilador, val: data, oc: res})
+        Plc.writeInt({name: ventilador.ventilador, val: data, oc: res})
 
     }
     requestPLC()
@@ -256,7 +256,33 @@ exports.changeResistencia = function (value, callback) {
             callback(util.responseJSON(0))
         }
         var data = Math.round(value * 327.67)
-        Plc.writeInt({name: resistencia, val: data, oc: res})
+        Plc.writeInt({name: resistencia.resistencia, val: data, oc: res})
+
+    }
+    requestPLC()
+};
+
+/*************** RESISTENCIA ***************/
+
+exports.abort = function (callback) {
+
+    loadFunctions = function () {
+        var res = function () {
+            callback(util.responseJSON(0))
+        }
+console.log('ABORT')
+        Plc.writeInt({name: ventilador.ventilador, val: 0,
+            oc: Plc.writeInt({name: resistencia.resistencia, val: 0,
+                oc: Plc.writeBool({name: wallVar.right, val: false,
+                    oc: Plc.writeBool({name: wallVar.left, val: false,
+                        oc: Plc.writeBool({name: roofVar.close, val: false,
+                            oc: Plc.writeBool({name: wallVar.right, val: false,
+                                oc: res})
+                        })
+                    })
+                })
+            })
+        })
 
     }
     requestPLC()
@@ -276,7 +302,6 @@ var readTemperature = function () {
             //Obtenemos la marca de tiempo
             var timedate = new Date().toMysqlFormat();
 
-            //console.log('Temp value: ' + temperature, 'Time: '+ timedate)
             //Almacenamos la temperatura en la base de datos
             query.setTemperature([temperature, timedate], function (result) {})
 
@@ -294,7 +319,8 @@ var readTemperature = function () {
 };
 
 //Inicializamos al cargar el servidor que comience a leer la temperatura
-readTemperature()
+//TODO decomentar
+// /readTemperature()
 
 exports.setStateTermometro = function (state, callback) {
 

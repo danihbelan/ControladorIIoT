@@ -143,6 +143,15 @@ route.post("/changeResistencia", function (req, res) {
 });
 
 /**
+ * Ruta que llama a la funcion encargada de parar todos los actuadores
+ */
+route.post("/abort", function (req, res) {
+    PLC.abort(function (result) {
+        res.json(result)
+    });
+});
+
+/**
  * Ruta que obtiene las variables del softPLC
  */
 route.post("/readTemperature", function (req, res) {

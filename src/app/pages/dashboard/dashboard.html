@@ -1,5 +1,15 @@
 &nbsp;<div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-4"
+    <div class="col-xs-12 col-sm-6 col-md-4"
+         ba-panel
+         ba-panel-title="Time"
+         ba-panel-class="with-scroll">
+        <div >
+            <h1><span><img src="assets/img/termometro.png"/> {{ timeDate }} </span></h1>
+        </div>
+
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4"
          ba-panel
          ba-panel-title="Temperature"
          ba-panel-class="with-scroll">
@@ -9,23 +19,22 @@
 
     </div>
 
-    <div class="col-xs-12 col-sm-6 col-md-8"
+    <div class="col-xs-12 col-sm-12 col-md-4"
          ba-panel
          ba-panel-title="State"
          ba-panel-class="with-scroll">
 
         <div >
-            <div ng-if="temperature>19.9 && temperature<25" class="alert bg-success">
+            <div ng-if="temperature>=20 && temperature<25" class="alert bg-success">
                     <strong>NORMAL</strong>   La temperatura se encuentra dentro del margen establecido
             </div>
             <div ng-if="temperature<20" class="alert bg-info">
                 <strong>WARNING!</strong>   La temperatura se encuentra por debajo del margen establecido
             </div>
-            <div ng-if="temperature>24.9" class="alert bg-warning">
+            <div ng-if="temperature>=25" class="alert bg-danger">
                 <strong>WARNING!</strong>   La temperatura se encuentra por encima del margen establecido
             </div>
         </div>
-
 
     </div>
 </div>
@@ -87,13 +96,13 @@
          ba-panel-class="with-scroll">
 
         <h2 align="center"> STATE: <code>{{stateRoof}}</code></h2>
-
         <br>
-        <div align="center">
-            <button type="button" class="btn btn-primary btn-lg" ng-click="clickClose()">Close</button> &nbsp;
-            <button type="button" class="btn btn-primary btn-lg" ng-click="clickOpen()">Open</button> &nbsp;
-            <button type="button" class="btn btn-danger btn-lg" ng-click="clickStopRoof()">STOP</button> &nbsp;
+        <div class="row btns-row btns-same-width-lg" align="center">
+            <div class="col-sm-4 col-xs-12"><button type="button" class="btn btn-primary btn-lg" ng-click="clickClose()">Close</button></div>
+            <div class="col-sm-4 col-xs-12"><button type="button" class="btn btn-primary btn-lg" ng-click="clickOpen()">Open</button></div>
+            <div class="col-sm-4 col-xs-12"><button type="button" class="btn btn-danger btn-lg" ng-click="clickStopRoof()">STOP</button></div>
         </div>
+
     </div>
 
     <div class="col-xs-6 col-sm-6 col-md-6"
@@ -102,12 +111,11 @@
          ba-panel-class="with-scroll">
 
         <h2 align="center"> STATE: <code>{{stateWall}}</code></h2>
-
         <br>
-        <div align="center">
-            <button type="button" class="btn btn-primary btn-lg" ng-click="clickMoveLeft()">Move Left</button> &nbsp;
-            <button type="button" class="btn btn-primary btn-lg" ng-click="clickMoveRight()">Move Right</button> &nbsp;
-            <button type="button" class="btn btn-danger btn-lg" ng-click="clickStopWall()">STOP</button> &nbsp;
+        <div class="row btns-row btns-same-width-lg" align="center">
+            <div class="col-sm-4 col-xs-12"><button type="button" class="btn btn-primary btn-lg" ng-click="clickMoveLeft()">Move Left</button></div>
+            <div class="col-sm-4 col-xs-12"><button type="button" class="btn btn-primary btn-lg" ng-click="clickMoveRight()">Move Right</button></div>
+            <div class="col-sm-4 col-xs-12"><button type="button" class="btn btn-danger btn-lg" ng-click="clickStopWall()">STOP</button></div>
         </div>
 
     </div>
