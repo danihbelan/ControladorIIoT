@@ -20,7 +20,6 @@
         $scope.temperature = 21.0
         $scope.time
         $scope.date
-        $scope.timeDate
         var temperatures = []
 
         /*-----------------------------
@@ -37,7 +36,6 @@
 
             $scope.time = d.getHours() + ":" + (d.getMinutes()<10?'0':'') + d.getMinutes()
             $scope.date = d.getDate() + "/" + d.getMonth()+1 + "/" + d.getFullYear()
-            $scope.timeDate = $scope.time + '  ' +'\n' + $scope.date
 
             //Volvemos a llamar a la funcion cada 999 milisegundos
             setTimeout(function () {
