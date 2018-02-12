@@ -42,26 +42,12 @@ function isAuthorized(session) {
     }
 });*/
 
-
 /**
- * Ruta que lee un dato de una salida del modulo PLC
+ * Ruta que obtiene las variables del softPLC
  */
-route.post("/readData", function (req, res) {
-    var id = req.body.id
+route.post("/readTemperature", function (req, res) {
 
-    PLC.readData(id, function (result) {
-        res.json(result)
-    });
-});
-
-/**
- * Ruta que escribe un dato en una salida del modulo PLC
- */
-route.post("/writeData", function (req, res) {
-    var ids = req.body.ids
-    var states = req.body.states
-
-    PLC.writeData(ids, states, function (result) {
+    PLC.readTemperature(function (result) {
         res.json(result)
     });
 });
@@ -147,16 +133,6 @@ route.post("/changeResistencia", function (req, res) {
  */
 route.post("/abort", function (req, res) {
     PLC.abort(function (result) {
-        res.json(result)
-    });
-});
-
-/**
- * Ruta que obtiene las variables del softPLC
- */
-route.post("/readTemperature", function (req, res) {
-
-    PLC.readTemperature(function (result) {
         res.json(result)
     });
 });

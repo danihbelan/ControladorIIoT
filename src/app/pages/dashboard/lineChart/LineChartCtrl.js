@@ -33,7 +33,7 @@
 
             })
 
-            //Volvemos a llamar a la funcion cada un minuto
+            //Volvemos a llamar a la funcion cada minuto
             setTimeout(function () {
                 getValues()
             }, 60000)
