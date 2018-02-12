@@ -45,6 +45,8 @@ function description(error, descripcion){
     case 100 : return "Usuario o password incorrecto";
     case 101 : return "No existe usuario registrado con ese nombre";
     case 103 : return "Fallo al obtener los datos generales";
+    case 104 : return "Error al obtener los datos con los valores";
+    case 105 : return "Error al guardar los datos con los valores";
 
 
 

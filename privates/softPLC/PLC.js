@@ -240,6 +240,9 @@ exports.changeVentilador = function (value, callback) {
         var res = function () {
             callback(util.responseJSON(0))
         }
+        //Guardamos el valor para guardarlo en la base de datos
+        ventiladorValue = value
+        //Escalamos el valor
         var data = Math.round(value * 327.67)
         Plc.writeInt({name: ventilador.ventilador, val: data, oc: res})
 
@@ -255,6 +258,9 @@ exports.changeResistencia = function (value, callback) {
         var res = function () {
             callback(util.responseJSON(0))
         }
+        //Guardamos el valor para guardarlo en la base de datos
+        resistenciaValue = value
+        //Escalamos el valor
         var data = Math.round(value * 327.67)
         Plc.writeInt({name: resistencia.resistencia, val: data, oc: res})
 
@@ -303,7 +309,8 @@ var readTemperature = function () {
             var timedate = new Date().toMysqlFormat();
 
             //Almacenamos la temperatura en la base de datos
-            query.setTemperature([temperature, timedate], function (result) {})
+            //query.setTemperature([temperature, timedate], function (result) {})
+            query.setValues([temperature, ventiladorValue, resistenciaValue, timedate], function (result) {})
 
             //Volvemos a medir la temperatura
             setTimeout(function () {
@@ -318,7 +325,9 @@ var readTemperature = function () {
     requestPLC()
 };
 
-//Inicializamos al cargar el servidor que comience a leer la temperatura
+//Inicializamos al cargar el servidor que comience a leer la temperatura y guarde los valores
+var ventiladorValue = 0;
+var resistenciaValue = 0;
 readTemperature()
 
 exports.setStateTermometro = function (state, callback) {
@@ -331,7 +340,6 @@ exports.setStateTermometro = function (state, callback) {
 
     callback(util.responseJSON(0))
 };
-
 
 /////////////////////////////////////////////////
 

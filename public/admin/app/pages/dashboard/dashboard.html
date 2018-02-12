@@ -1,0 +1,133 @@
+&nbsp;<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4"
+         ba-panel
+         ba-panel-title="Time"
+         ba-panel-class="with-scroll">
+        <div >
+            <h2><span>&nbsp;&nbsp;<img src="assets/img/clock.png"/>&nbsp;&nbsp;&nbsp; {{ time }} </span></h2>
+            <h3><span>&nbsp;&nbsp;<img src="assets/img/calendar.png"/>&nbsp;&nbsp;&nbsp;&nbsp; {{ date }} </span></h3>
+        </div>
+
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4"
+         ba-panel
+         ba-panel-title="Temperature"
+         ba-panel-class="with-scroll">
+        <div >
+            <h1><span><img src="assets/img/termometro.png"/> {{ temperature }} ºC</span></h1>
+        </div>
+
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-4"
+         ba-panel
+         ba-panel-title="State"
+         ba-panel-class="with-scroll">
+
+        <div >
+            <div ng-if="temperature>=20 && temperature<25" class="alert bg-success">
+                    <strong>NORMAL</strong>   La temperatura se encuentra dentro del margen establecido
+            </div>
+            <div ng-if="temperature<20" class="alert bg-info">
+                <strong>WARNING!</strong>   La temperatura se encuentra por debajo del margen establecido
+            </div>
+            <div ng-if="temperature>=25" class="alert bg-danger">
+                <strong>WARNING!</strong>   La temperatura se encuentra por encima del margen establecido
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12"
+         ba-panel
+         ba-panel-title="Temperature Chart"
+         ba-panel-class="with-scroll">
+        <div ng-include="'app/pages/dashboard/lineChart/lineChart.html'"></div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6"
+         ba-panel
+         ba-panel-title="Ventilador"
+         ba-panel-class="with-scroll">
+
+        <h2 align="center"> STATE: <code>{{stateVentilador}}</code></h2>
+
+        <h5>Select Power:</h5>
+        <br>
+        <ion-slider type="single"
+                    grid="true"
+                    min="0"
+                    max="100"
+                    postfix="%"
+                    on-finish="changeVentilador">
+        </ion-slider>
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-6"
+         ba-panel
+         ba-panel-title="Resistencia"
+         ba-panel-class="with-scroll">
+
+
+        <h2 align="center"> STATE: <code>{{stateResistencia}}</code></h2>
+
+        <h5>Select Power:</h5>
+        <br>
+        <ion-slider type="single"
+                    grid="true"
+                    min="0"
+                    max="100"
+                    postfix="%"
+                    on-finish="changeResistencia">
+        </ion-slider>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6"
+         ba-panel
+         ba-panel-title="Roof"
+         ba-panel-class="with-scroll">
+
+        <h2 align="center"> STATE: <code>{{stateRoof}}</code></h2>
+        <br>
+        <div class="row btns-row btns-same-width-lg" align="center">
+            <div class="col-sm-4 col-xs-12"><button type="button" class="btn btn-primary btn-lg" ng-click="clickClose()">Close</button></div>
+            <div class="col-sm-4 col-xs-12"><button type="button" class="btn btn-primary btn-lg" ng-click="clickOpen()">Open</button></div>
+            <div class="col-sm-4 col-xs-12"><button type="button" class="btn btn-danger btn-lg" ng-click="clickStopRoof()">STOP</button></div>
+        </div>
+
+    </div>
+
+    <div class="col-xs-6 col-sm-6 col-md-6"
+         ba-panel
+         ba-panel-title="Wall"
+         ba-panel-class="with-scroll">
+
+        <h2 align="center"> STATE: <code>{{stateWall}}</code></h2>
+        <br>
+        <div class="row btns-row btns-same-width-lg" align="center">
+            <div class="col-sm-4 col-xs-12"><button type="button" class="btn btn-primary btn-lg" ng-click="clickMoveLeft()">Move Left</button></div>
+            <div class="col-sm-4 col-xs-12"><button type="button" class="btn btn-primary btn-lg" ng-click="clickMoveRight()">Move Right</button></div>
+            <div class="col-sm-4 col-xs-12"><button type="button" class="btn btn-danger btn-lg" ng-click="clickStopWall()">STOP</button></div>
+        </div>
+
+    </div>
+</div>
+
+<div align="center">
+<button type="button" class="btn btn-danger btn-with-icon btn-lg" ng-click="clickAbort()"><i class="ion-android-warning"></i>ABORT!</button>
+</div>
+<br><br>
+
+
+
+
+

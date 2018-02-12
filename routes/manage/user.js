@@ -164,9 +164,9 @@ route.post("/readTemperature", function (req, res) {
 /**
  * Ruta que obtiene el historico de las temperaturas
  */
-route.post("/getTemperatures", function (req, res) {
+route.post("/getValues", function (req, res) {
 
-    query.getTemperatures(function (result) {
+    query.getValues(function (result) {
         res.json(result)
     })
 });
