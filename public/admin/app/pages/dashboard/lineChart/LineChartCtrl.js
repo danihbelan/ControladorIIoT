@@ -89,7 +89,7 @@
             vent = (vent.reduce(add, 0)) / vent.length
             res = (res.reduce(add, 0)) / res.length
             arrayValues.push({time: t, temperature: temp, ventiladorPower: vent, resistenciaPower: res})
-console.log(arrayValues)
+
             //Actualizamos la grafica
             var layoutColors = baConfig.colors;
             var id = $element[0].getAttribute('id');
