@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.36">
+  <DUT Name="ST_Test4" Id="{9c5153ae-8c39-4e70-bf54-37c9c8b1a385}">
+    <Declaration><![CDATA[TYPE ST_Test4 :
+STRUCT
+	fReal: REAL;
+	tTime: TIME;
+	tTod: TOD;
+	dtDate: DATE;
+	arrString: ARRAY[1..5] OF STRING(6);
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,5 +1,5 @@
 /**
- * Fichero con funciones utiles de la database
+ * Fichero con funciones utiles de respuesta
  *
  * Created by danihbelan on 15/01/2018.
  */

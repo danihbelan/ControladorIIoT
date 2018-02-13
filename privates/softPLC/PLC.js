@@ -3,7 +3,7 @@
  */
 
 "use strict";
-var util = require('./util')
+var util = require('../database/util.js')
 var lodash = require('lodash')
 var query = require('../../privates/database/subsistems/general')
 

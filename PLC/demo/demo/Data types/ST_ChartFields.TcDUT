@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.36">
+  <DUT Name="ST_ChartFields" Id="{29f76837-271f-424b-b85c-ca3b6410a66b}">
+    <Declaration><![CDATA[TYPE ST_ChartFields :
+STRUCT
+	graph1: INT;
+	graph2: INT;
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

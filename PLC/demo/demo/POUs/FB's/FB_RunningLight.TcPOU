@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.36">
+  <POU Name="FB_RunningLight" Id="{81556794-4132-467c-a80a-cad27458c688}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_RunningLight
+VAR_INPUT
+	bRun: BOOL;
+	tPulse: TIME:= T#500ms;
+END_VAR
+VAR_OUTPUT
+	bQ1: BOOL;
+	bQ2: BOOL;
+	bQ3: BOOL;
+	bQ4: BOOL;
+	bQ5: BOOL;
+END_VAR
+VAR
+	tonPulse: TON;
+	bActive: BOOL;
+	tmp: BOOL;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[tonPulse(in:=NOT tonPulse.Q AND bRun, PT:=tPulse);
+
+IF tonPulse.Q THEN
+	bQ5:= bQ4;
+	bQ4:= bQ3;
+	bQ3:= bQ2;
+	bQ2:= bQ1;
+	bQ1:= tmp;
+	tmp := bQ5;
+END_IF;
+
+IF NOT bRun THEN
+	bQ1 := FALSE;
+	bQ2 := FALSE;
+	bQ3 := FALSE;
+	bQ4 := FALSE;
+	bQ5 := FALSE;
+END_IF;
+
+IF bRun AND NOT bActive THEN
+	bQ1 := TRUE;
+END_IF;
+
+bActive := bRun;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

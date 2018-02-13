@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.36">
+  <POU Name="TogRS" Id="{0748db97-5cc0-46a0-9119-441d96e83abe}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK TogRS
+VAR_INPUT
+	CLK : BOOL;
+	SET: BOOL;
+	RESET1 : BOOL;
+END_VAR
+VAR_OUTPUT
+	Q1 : BOOL;
+	edge : BOOL;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF RESET1 THEN
+	Q1 := 0;
+ELSIF SET THEN
+	Q1:= 1;
+ELSIF CLK AND NOT edge THEN
+	Q1 := NOT Q1;
+END_IF;
+edge := clk;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

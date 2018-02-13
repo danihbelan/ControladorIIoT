@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.36">
+  <POU Name="FB_Ramp" Id="{008318cc-b851-4886-9e0c-98b7d41e917e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Ramp
+VAR_INPUT
+	bChangeDir: BOOL;		(*change direction*)
+	nLimitHigh: INT:= 32767;	(*limit high*)
+	nLimitLow: INT:= -32768;	(*limit low*)
+	tPulse: TIME:= T#50ms; 	(*pulse pause time for counter*)
+END_VAR
+VAR_OUTPUT
+	nRamp: INT;
+END_VAR
+VAR
+	rtrigChangeDir: R_TRIG;
+	tonPulse: TON;
+	rsDown: TogRS;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[tonPulse(in:=NOT tonPulse.Q, PT:=tPulse);
+rsDown(set:=nRamp >= nLimitHigh, reset1:= nRamp <= nLimitLow, clk:=bChangeDir);
+
+IF tonPulse.Q THEN
+	IF rsDown.Q1 THEN
+		nRamp := nRamp - 1;
+	ELSE
+		nRamp := nRamp +1;
+	END_IF;
+END_IF;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

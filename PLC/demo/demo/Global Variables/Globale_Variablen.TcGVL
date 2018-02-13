@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.7">
+  <GVL Name="Globale_Variablen" Id="{caf9618c-50bb-4616-9423-28a8ba018b8d}">
+    <Declaration><![CDATA[{attribute 'Tc2GvlVarNames'}
+VAR_GLOBAL
+	
+	OUT_BOOL_1 AT %Q*:BOOL;
+	OUT_BOOL_2 AT %Q*:BOOL;
+	OUT_BOOL_3 AT %Q*:BOOL;
+	OUT_BOOL_4 AT %Q*:BOOL;
+	OUT_BOOL_5 AT %Q*:BOOL;
+	OUT_BOOL_6 AT %Q*:BOOL;
+	OUT_BOOL_7 AT %Q*:BOOL;
+	OUT_BOOL_8 AT %Q*:BOOL;
+	
+	IN_BOOL_1 AT %I*:BOOL;
+	IN_BOOL_2 AT %I*:BOOL;
+	IN_BOOL_3 AT %I*:BOOL;
+	IN_BOOL_4 AT %I*:BOOL;
+	IN_BOOL_5 AT %I*:BOOL;
+	IN_BOOL_6 AT %I*:BOOL;
+	IN_BOOL_7 AT %I*:BOOL;
+	IN_BOOL_8 AT %I*:BOOL;
+	
+	OUT_INT_1 AT %Q*:INT;
+	OUT_INT_2 AT %Q*:INT;
+	
+	IN_INT_1 AT %I*:INT;
+	IN_INT_2 AT %I*:INT;
+	
+	In_BOOL1 AT%MX0.0 : BOOL;
+	In_BOOL2: BOOL;
+
+	In_SINT1: SINT;
+	In_SINT2: SINT;
+	In_SINT3: SINT;
+	In_SINT4: SINT;
+	In_INT1: INT;
+	In_INT2: INT;
+	In_DINT: DINT;
+	In_STRING: STRING(11);
+	In_TIME: TIME;
+	In_REAL: REAL;
+	
+
+	TOD_Test : TOD;
+	DT_Test: DT;
+	DATE_Test: DATE;
+
+	ArrayOfString: ARRAY[1..5] OF STRING(10);
+	ArrayOfBool:  ARRAY[1..5] OF BOOL;
+
+	ArrayOfTestStruct2: ARRAY[1..4] OF ST_Test2;
+
+	TestStruct:  ST_Test;
+
+	ArrayTestStruct3: ARRAY [1..20] OF ST_Test3;
+
+	TestStruct4 :  ST_Test4;
+
+	ArrayChart: ARRAY [1..10] OF ST_ChartFields (*Kommentar*);
+END_VAR
+]]></Declaration>
+  </GVL>
+</TcPlcObject>
