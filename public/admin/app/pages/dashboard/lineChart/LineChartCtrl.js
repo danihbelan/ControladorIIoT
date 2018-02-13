@@ -33,7 +33,7 @@
 
             })
 
-            //Volvemos a llamar a la funcion cada un minuto
+            //Volvemos a llamar a la funcion cada minuto
             setTimeout(function () {
                 getValues()
             }, 60000)
@@ -50,7 +50,7 @@
                 var sqlDate1 = sqlDate.split("-")
                 var sqlDate2 = sqlDate1[2].split("T")
                 var sqlDate3 = sqlDate2[1].split(":")
-                var tHourMinute = (Number(sqlDate3[0])+1) + ":" + sqlDate3[1];
+                var tHourMinute = ((Number(sqlDate3[0])+1)<10?'0':'') + (Number(sqlDate3[0])+1) + ":" + sqlDate3[1];
 
                 var data = {time: tHourMinute, temperature: val.temperature,
                             ventiladorPower: val.ventiladorPower, resistenciaPower: val.resistenciaPower}
@@ -89,7 +89,7 @@
             vent = (vent.reduce(add, 0)) / vent.length
             res = (res.reduce(add, 0)) / res.length
             arrayValues.push({time: t, temperature: temp, ventiladorPower: vent, resistenciaPower: res})
-
+console.log(arrayValues)
             //Actualizamos la grafica
             var layoutColors = baConfig.colors;
             var id = $element[0].getAttribute('id');
